@@ -1,0 +1,18 @@
+<form action="/" method="post">
+  <label for="nominee">I Nominate:</label>
+  <select id="nominee" name="nominee_id">
+    <% @users.each do |user| %>
+      <option value="<%= user["id"] %>"><%= user["name"] %></option>
+    <% end %>
+  </select>
+  <textarea placeholder="Enter the name of your award. E.g., Best hairdo." name="nominations_content"></textarea>
+  <input type="submit"></input>
+</form>
+<hr></hr>
+
+
+<ul>
+<% @get_award_info.each do |award| %>
+  <li><%= "Name: #{award["name"]} Award: #{award["content"]}" %></li>
+<% end %>
+</ul>
