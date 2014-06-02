@@ -51,7 +51,7 @@ end
 
 def get_names
   connection = PG.connect(settings.database_config)
-  names = connection.exec('SELECT * FROM users')
+  names = connection.exec('SELECT * FROM users ORDER BY name')
   connection.close
   names
 end
