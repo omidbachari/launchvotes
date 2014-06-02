@@ -64,10 +64,10 @@ def add_award_info(nominations_content, votes, nominee_id)
   end
 end
 
-def upvote_comment(add_one, id)
-  sql = 'UPDATE nominations SET votes = $1 WHERE id = $2'
+def upvote_comment(id)
+  sql = 'UPDATE nominations SET votes = votes+1 WHERE id = $1'
   db_connection do |conn|
-    conn.exec_params(sql,[add_one,id])
+    conn.exec_params(sql,[id])
   end
 end
 
@@ -87,7 +87,7 @@ end
 
 post '/:nominations_id' do
   # Update comments.vote +1 where params["comment"] =  comments.id
-  upvote_comment(params["plus_one"], params[:nominations_id])
+  upvote_comment(params[:nominations_id])
   redirect "/"
 end
 

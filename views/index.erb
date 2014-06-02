@@ -51,7 +51,6 @@
               </div>
               <div class="top votes">
                 <form action="/<%= award["id"]%>" method="post">
-                  <input type="hidden" name="plus_one" value="<%= award["votes"].to_i + 1 %>">
                   <input type="submit" value="<%= award["votes"] %>" class="votes">
                 </form>
               </div>
