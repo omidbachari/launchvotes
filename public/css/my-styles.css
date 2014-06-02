@@ -136,6 +136,10 @@ form input[type=text] {
 }
 
 /*------------------ Award Nominations -------------------*/
+.make-nom {
+  font-weight: 100;
+}
+
 .award {
   width: 100%;
   height: 400px;
@@ -150,6 +154,7 @@ form input[type=text] {
 
 .prof-pic {
   border-radius: 150px;
+  /*border: 5px solid white;*/
   height: 200px;
 }
 

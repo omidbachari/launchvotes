@@ -3,9 +3,6 @@
     <div class="col-md-4 nav">
       <h1> <img class="logo" src="/assets/logo.png"> <a href="/">LaunchVotes</a></h1>
     </div>
-<!--     <div class="col-md-1 col-md-offset-6 nav-links">
-      <h4 class="navbar-text navbar-right"> <a href="http://www.launchacademy.com/">About</a></h4>
-    </div> -->
   </div>
 </header>
 
@@ -44,7 +41,7 @@
     <div class="col-md-12"><h1 class="title">Nominations</h1><p>...click ribbon to upvote</p></div>
     <div class="row nomination-line">
       <% if @get_award_info == [] %>
-        <div class="col-md-8"><h1>Make the first nomination!</h1></div>
+        <div class="col-md-8 col-md-offset-4"><h1 class="make-nom">Make the first nomination!</h1></div>
       <% else %>
         <% @get_award_info.each do |award| %>
           <div class="col-md-3">
