@@ -1,0 +1,141 @@
+html, body {
+  width: auto !important;
+  overflow-x: hidden !important;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+  background: #EEEEEE;
+}
+
+/*------------------ Header -------------------*/
+
+.roboto-sm {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+}
+
+header {
+  width: 100%;
+  height: 100px;
+  background: #34495e;
+  border-bottom: 5px solid #2c3e50;
+  color: white;
+  margin-top: -20px;
+}
+
+a,
+a:hover {
+  text-decoration: none;
+  color: white;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+}
+
+.nav {
+  padding: 15px 0px 15px 50px;
+}
+
+.logo {
+  height: 50px;
+}
+
+.nav-links {
+  padding-top: 35px;
+}
+
+.nav-links a {
+  color: white;
+  font-weight: 100;
+}
+
+/*------------------ Jumbotron -------------------*/
+.jumbotron {
+  background: white;
+  /*background-image: url('../assets/logo.png');*/
+  background-position: center;
+}
+
+.jumbo-content {
+  padding-top: 150px;
+  padding-bottom: 150px;
+}
+
+.jumbotron h1 {
+  color: black;
+}
+
+/*------------------ Form -------------------*/
+.form-container {
+  margin-top: 50px;
+}
+
+.form label,
+.form h1 {
+  font-weight: 100;
+}
+
+.form form {
+  text-align: center;
+}
+
+.form {
+  width: 100%;
+  height: auto;
+  background: #ed197b;
+  border-bottom: 5px solid #d60c67;
+  color: white;
+  margin-top: -20px;
+  padding: 10px 30px 30px 30px;
+}
+
+.center {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.btn-submit {
+  background: white;
+  border-radius: 5px;
+  border: 1px solid white;
+}
+
+form select,
+form input[type=text] {
+  width: 50%;
+  height: 40px;
+  margin-bottom: 10px;
+  padding-left: 15px;
+  background: #fff;
+  border: none;
+  color: #34495e;
+  outline: none;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 100;
+  resize: none;
+  text-align: center;
+}
+
+::-webkit-input-placeholder {
+   color: #34495e;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+   color: #34495e;
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   color: #34495e;
+}
+
+:-ms-input-placeholder {
+   color: #34495e;
+}
+
+/*------------------ Award Nominations -------------------*/
+.awards-container {
+  margin-top: 50px;
+}
+
+
