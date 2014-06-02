@@ -1,16 +1,48 @@
-require "sinatra"
 
+require 'sinatra'
+require 'sinatra/reloader'
+require 'pg'
 
 #methods
 
+require 'pg'
+
+def production_database_config
+  db_url_parts = ENV['DATABASE_URL'].split(/\/|:|@/)
+
+  {
+    user: db_url_parts[3],
+    password: db_url_parts[4],
+    host: db_url_parts[5],
+    dbname: db_url_parts[7]
+  }
+end
+
+configure :development do
+  set :database_config, { dbname: 'launchvotes' }
+end
+
+configure :production do
+  set :database_config, production_database_config
+end
+
 def db_connection
   begin
-    connection = PG.connect(dbname: 'launchvotes')
+    connection = PG.connect(settings.database_config)
     yield(connection)
   ensure
     connection.close
   end
 end
+
+# def db_connection
+#   begin
+#     connection = PG.connect(dbname: 'launchvotes')
+#     yield(connection)
+#   ensure
+#     connection.close
+#   end
+# end
 
 def get_award_info
   connection = PG.connect(dbname: 'launchvotes')
