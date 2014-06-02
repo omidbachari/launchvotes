@@ -1,6 +1,5 @@
 require "sinatra"
 
-require "pg"
 
 #methods
 
