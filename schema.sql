@@ -51,6 +51,3 @@ INSERT INTO users (name) VALUES ('Simon Skates');
 INSERT INTO users (name) VALUES ('Ted Kwasnik');
 INSERT INTO users (name) VALUES ('Zachary Adams');
 
-INSERT INTO nominations (content, votes, created_at, nominee_id) VALUES ('Worst Face', 0, now(), 1);
-
-INSERT INTO nominations (content, votes, created_at, nominee_id) VALUES ('Best Hairdo', 0, now(),3);

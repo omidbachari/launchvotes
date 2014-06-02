@@ -15,7 +15,7 @@ end
 
 def get_award_info
   connection = PG.connect(dbname: 'launchvotes')
-  award_info = connection.exec('SELECT nominations.id, nominations.votes, nominations.content, nominations.created_at, users.name, users.pic_url FROM nominations LEFT JOIN users ON users.id = nominations.nominee_id ORDER BY nominations.created_at')
+  award_info = connection.exec('SELECT nominations.id, nominations.votes, nominations.content, nominations.created_at, users.name, users.pic_url FROM nominations LEFT JOIN users ON users.id = nominations.nominee_id ORDER BY nominations.votes DESC')
   connection.close
   award_info.to_a
 end
@@ -27,11 +27,11 @@ def get_names
   names
 end
 
-def add_award_info(nominations_content, nominee_id)
+def add_award_info(nominations_content, votes, nominee_id)
   connection = PG.connect(dbname: 'launchvotes')
-  sql = "INSERT INTO nominations (content, votes created_at, nominee_id) VALUES ($1, $2, now(), $3)"
+  sql = "INSERT INTO nominations (content, votes, created_at, nominee_id) VALUES ($1, $2, now(), $3)"
   db_connection do |conn|
-    conn.exec_params(sql,[nominations_content,nominee_id])
+    conn.exec_params(sql,[nominations_content, votes, nominee_id])
   end
 end
 

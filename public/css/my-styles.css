@@ -31,7 +31,7 @@ a:hover {
   text-decoration: none;
   color: white;
   font-family: 'Roboto', sans-serif;
-  font-weight: 300;
+  font-weight: 100;
 }
 
 .nav {
@@ -54,13 +54,14 @@ a:hover {
 /*------------------ Jumbotron -------------------*/
 .jumbotron {
   background: white;
-  /*background-image: url('../assets/logo.png');*/
+  background-image: url('../assets/launch1.png');
   background-position: center;
+  border-bottom: 3px solid #ed197b;
 }
 
 .jumbo-content {
-  padding-top: 150px;
-  padding-bottom: 150px;
+  padding-top: 225px;
+  padding-bottom: 225px;
 }
 
 .jumbotron h1 {
@@ -69,7 +70,7 @@ a:hover {
 
 /*------------------ Form -------------------*/
 .form-container {
-  margin-top: 50px;
+  margin-top: 100px;
 }
 
 .form label,
@@ -172,7 +173,7 @@ form input[type=text] {
 }
 
 .over{
-  margin-top: -45px;
+  margin-top: -44px;
   z-index: 1;
   position: relative;
   margin-left: -65%;
@@ -198,6 +199,5 @@ form input[type=text] {
   background: #ed197b;
   color: white;
   border: none;
-  -moz-border-radius: 2px;
-  border-radius: 2px;
+  border-radius: 150px;
 }
