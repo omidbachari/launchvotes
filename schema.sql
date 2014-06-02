@@ -20,8 +20,8 @@ INSERT INTO users (name, pic_url) VALUES ('Caleb Thill', 'https://s3.amazonaws.c
 INSERT INTO users (name, pic_url) VALUES ('Dan Murphy', 'https://s3.amazonaws.com/Launchers/Dan-Murphy.jpg');
 INSERT INTO users (name, pic_url) VALUES ('Alek Grinberg', 'https://s3.amazonaws.com/Launchers/Alek-Grinberg.jpg');
 INSERT INTO users (name, pic_url) VALUES ('Colin Scott', 'https://s3.amazonaws.com/Launchers/Colin-Scott.jpg');
-INSERT INTO users (name, pic_url) VALUES ('David Guerette', 'https://s3.amazonaws.com/Launchers/David-Guerette.jpg');
 INSERT INTO users (name, pic_url) VALUES ('Griff Hall', 'https://s3.amazonaws.com/Launchers/Griff-Hall.jpg');
+INSERT INTO users (name, pic_url) VALUES ('David Guerette', 'https://s3.amazonaws.com/Launchers/David-Guerette.jpg');
 INSERT INTO users (name, pic_url) VALUES ('Kurt Michael Henry', 'https://s3.amazonaws.com/Launchers/Kurt-Henry.jpg');
 INSERT INTO users (name, pic_url) VALUES ('Nick Terrafranca', 'https://s3.amazonaws.com/Launchers/Nick-Terrafranca.jpg');
 INSERT INTO users (name, pic_url) VALUES ('Pete Dunbar', 'https://s3.amazonaws.com/Launchers/Pete-Dunbar.jpg');
@@ -40,6 +40,7 @@ INSERT INTO users (name, pic_url) VALUES ('David Pointeau', 'https://s3.amazonaw
 INSERT INTO users (name, pic_url) VALUES ('Fahad Mukunzi', 'https://s3.amazonaws.com/Launchers/Fahad-Mukunzi.jpg');
 INSERT INTO users (name, pic_url) VALUES ('Helen Swanson', 'https://s3.amazonaws.com/Launchers/Helen-Swanson.jpg');
 INSERT INTO users (name, pic_url) VALUES ('Jacinda Zhong', 'https://s3.amazonaws.com/Launchers/Jacinda-Zhong.jpg');
+
 INSERT INTO users (name, pic_url) VALUES ('John Keith', 'https://s3.amazonaws.com/Launchers/John-Keith.jpg');
 INSERT INTO users (name, pic_url) VALUES ('Katie Blair', 'https://s3.amazonaws.com/Launchers/Katie-Blair.jpg');
 INSERT INTO users (name, pic_url) VALUES ('Lawrence Chang', 'https://s3.amazonaws.com/Launchers/Lawrence-Chang.jpg');
