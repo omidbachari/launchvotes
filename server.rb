@@ -1,11 +1,9 @@
 
 require 'sinatra'
-require 'sinatra/reloader'
 require 'pg'
 
 #methods
 
-require 'pg'
 
 def production_database_config
   db_url_parts = ENV['DATABASE_URL'].split(/\/|:|@/)
