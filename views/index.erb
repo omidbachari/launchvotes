@@ -41,12 +41,21 @@
   </div>
 
   <div class="awards-container">
-    <div class="col-md-12"><h1 class="title">Nominations:</h1></div>
+    <div class="col-md-12"><h1 class="title">Nominations</h1></div>
     <div class="row nomination-line">
       <% @get_award_info.each do |award| %>
         <div class="col-md-3">
           <div class="award">
-            <div>
+            <div class="over">
+              <img class="ribbon" src="../assets/ribbon.png">
+            </div>
+            <div class="top votes">
+              <form action="/<%= award["id"]%>" method="post">
+                <input type="hidden" name="plus_one" value="<%= award["votes"].to_i + 1 %>">
+                <input type="submit" value="<%= award["votes"] %>" class="votes">
+              </form>
+            </div>
+            <div class="under">
               <% if award["pic_url"] == nil %>
                 <img class="prof-pic" src="../assets/placeholder.jpg">
               <% else %>

@@ -144,6 +144,7 @@ form input[type=text] {
   padding-top: 40px;
   text-align: center;
   margin-bottom: 50px;
+  /*z-index: -1;*/
 }
 
 .prof-pic {
@@ -164,4 +165,39 @@ form input[type=text] {
 
 .award-title {
   font-weight: 100;
+}
+
+.ribbon {
+  height: 75px;
+}
+
+.over{
+  margin-top: -45px;
+  z-index: 1;
+  position: relative;
+  margin-left: -65%;
+}
+
+.top {
+  margin-top: -63px;
+  z-index: 2;
+  position: relative;
+  margin-left: -65%;
+}
+
+.under {
+  margin-top: -20px;
+  z-index: -1;
+}
+
+.votes {
+  font-size: 1.25em;
+}
+
+.votes form input[type=submit] {
+  background: #ed197b;
+  color: white;
+  border: none;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
 }

@@ -7,6 +7,7 @@ CREATE TABLE users (
 CREATE TABLE nominations (
   id serial,
   content varchar(1000) NOT NULL,
+  votes integer,
   created_at timestamp NOT NULL,
   nominee_id integer NOT NULL REFERENCES users(id)
 );
@@ -50,6 +51,6 @@ INSERT INTO users (name) VALUES ('Simon Skates');
 INSERT INTO users (name) VALUES ('Ted Kwasnik');
 INSERT INTO users (name) VALUES ('Zachary Adams');
 
-INSERT INTO nominations (content, created_at, nominee_id) VALUES ('Worst Face', now(), 1);
+INSERT INTO nominations (content, votes, created_at, nominee_id) VALUES ('Worst Face', 0, now(), 1);
 
-INSERT INTO nominations (content, created_at, nominee_id) VALUES ('Best Hairdo', now(),3);
+INSERT INTO nominations (content, votes, created_at, nominee_id) VALUES ('Best Hairdo', 0, now(),3);
