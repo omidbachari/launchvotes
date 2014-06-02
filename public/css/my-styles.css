@@ -7,6 +7,7 @@ body {
   font-family: 'Roboto', sans-serif;
   font-weight: 300;
   background: #EEEEEE;
+  padding-bottom: 50px;
 }
 
 /*------------------ Header -------------------*/
@@ -134,8 +135,33 @@ form input[type=text] {
 }
 
 /*------------------ Award Nominations -------------------*/
-.awards-container {
-  margin-top: 50px;
+.award {
+  width: 100%;
+  height: 400px;
+  background: #34495e;
+  border-bottom: 5px solid #2c3e50;
+  color: white;
+  padding-top: 40px;
+  text-align: center;
+  margin-bottom: 50px;
 }
 
+.prof-pic {
+  border-radius: 150px;
+  height: 200px;
+}
 
+.launcher-name {
+  color:#ed197b;
+  font-weight: 100;
+}
+
+.title {
+  font-size: 5em;
+  margin-top: 100px;
+  font-weight: 100;
+}
+
+.award-title {
+  font-weight: 100;
+}

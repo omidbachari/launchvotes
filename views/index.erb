@@ -31,7 +31,7 @@
             <% end %>
           </select>
         </div>
-        <input type="text" class="roboto-sm" placeholder="Enter nomination (ex: Best hairdo)." name="nominations_content"/>
+        <input type="text" maxlength="40" class="roboto-sm" placeholder="Enter nomination (ex: Best hairdo)." name="nominations_content"/>
         <div>
           <input type="submit" class="btn-submit roboto-sm"></input>
         </div>
@@ -41,19 +41,25 @@
   </div>
 
   <div class="awards-container">
-    <div class="award">
-      <div class="col-md-6 col-md-offset-3">
-        <ul>
-        <% @get_award_info.each do |award| %>
-          <% if award["pic_url"] == nil %>
-            <img src="../assets/placeholder.jpg">
-          <% else %>
-            <img src="<%= award["pic_url"] %>">
-          <% end %>
-          <li><%= "Name: #{award["name"]} Award: #{award["content"]}" %></li>
-        <% end %>
-        </ul>
-      </div>
+    <div class="col-md-12"><h1 class="title">Nominations:</h1></div>
+    <div class="row nomination-line">
+      <% @get_award_info.each do |award| %>
+        <div class="col-md-3">
+          <div class="award">
+            <div>
+              <% if award["pic_url"] == nil %>
+                <img class="prof-pic" src="../assets/placeholder.jpg">
+              <% else %>
+                <img class="prof-pic" src="<%= award["pic_url"] %>">
+              <% end %>
+            </div>
+            <div>
+              <h2 class="launcher-name"><%= award["name"] %></h2>
+            </div>
+            <h2 class="award-title"><%= award["content"] %></h2>
+          </div>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>

@@ -40,7 +40,6 @@ end
 get '/' do
   @users = get_names
   @get_award_info = get_award_info
-
   erb :index
 end
 
