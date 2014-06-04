@@ -1,9 +1,25 @@
+# dotenv loads variables from a .env file into ENV when the environment is bootstrapped.
+require 'dotenv'
+Dotenv.load
 
 require 'sinatra'
+require 'sinatra/reloader'
+require 'sinatra/flash'
+require 'omniauth-github'
+require 'omniauth-facebook'
 require 'pg'
 
-#methods
+configure :development do
+  require 'pry'
+end
 
+configure do
+  enable :sessions
+
+  use OmniAuth::Builder do
+    provider :github, ENV['GITHUB_KEY'], ENV['GITHUB_SECRET']
+  end
+end
 
 def production_database_config
   db_url_parts = ENV['DATABASE_URL'].split(/\/|:|@/)
