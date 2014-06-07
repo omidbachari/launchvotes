@@ -9,9 +9,13 @@ require 'omniauth-github'
 require 'omniauth-facebook'
 require 'pg'
 
+require_relative 'models/user'
+
+
 configure :development do
   require 'pry'
 end
+
 
 configure do
   enable :sessions
@@ -21,6 +25,7 @@ configure do
   end
 end
 
+#------------------------------------------ Database Config ------------------------------------------
 def production_database_config
   db_url_parts = ENV['DATABASE_URL'].split(/\/|:|@/)
 
@@ -49,18 +54,35 @@ def db_connection
   end
 end
 
-# def db_connection
-#   begin
-#     connection = PG.connect(dbname: 'launchvotes')
-#     yield(connection)
-#   ensure
-#     connection.close
-#   end
-# end
+#------------------------------------------ Authorization ------------------------------------------
+# Unless the user is signed in, they will not be able to visit the page with votes
+def authorize!
+  unless signed_in?
+    flash[:notice] = "You need to sign in first."
+    redirect '/'
+  end
+end
 
+helpers do
+  def current_user
+    id = session['user_id']
+    # Change to read from database
+    @current_user ||= User.find_by_id(id)
+  end
+
+  # As long as the output from our method above (current_user) is NOT nil, then the user is signed in
+  def signed_in?
+    !current_user.nil?
+  end
+end
+
+#------------------------------------------ Methods ------------------------------------------
 def get_award_info
   connection = PG.connect(settings.database_config)
-  award_info = connection.exec('SELECT nominations.id, nominations.votes, nominations.content, nominations.created_at, users.name, users.pic_url FROM nominations LEFT JOIN users ON users.id = nominations.nominee_id ORDER BY nominations.votes DESC')
+  award_info = connection.exec('SELECT nominations.id, nominations.votes, nominations.content,
+                                nominations.created_at, users.name, users.pic_url FROM nominations
+                                LEFT JOIN users ON users.id = nominations.nominee_id
+                                ORDER BY nominations.created_at DESC')
   connection.close
   award_info.to_a
 end
@@ -87,23 +109,55 @@ def upvote_comment(id)
   end
 end
 
-#http
-
+#------------------------------------------ Routes ------------------------------------------
 get '/' do
-  @users = get_names
-  @get_award_info = get_award_info
   erb :index
 end
 
+get '/votes' do
+  authorize!
+  @users = get_names
+  @get_award_info = get_award_info
+  erb :show
+end
+
+get '/auth/:provider/callback' do
+  # This is returns a hash with all of the information sent back by the
+  # service (Github or Facebook)
+  auth = env['omniauth.auth']
+
+  # Build a hash that represents the user from the info given back from either
+  # Facebook or Github
+  user_attributes = {
+    uid: auth['uid'],
+    provider: auth['provider'],
+    email: auth['info']['email'],
+    avatar_url: auth['info']['image']
+  }
+
+  user = User.create(user_attributes)
+
+  # Save the id of the user that's logged in inside the session
+  session["user_id"] = user.id
+  redirect '/votes'
+end
+
+get '/sign_out' do
+  # Sign the user out by removing the id from the session
+  session["user_id"] = nil
+  redirect '/'
+end
+
+
 post '/' do
   add_award_info(params["nominations_content"], 0, params["nominee_id"].to_i)
-
-  redirect '/'
+  binding.pry
+  redirect '/votes'
 end
 
 post '/:nominations_id' do
   # Update comments.vote +1 where params["comment"] =  comments.id
   upvote_comment(params[:nominations_id])
-  redirect "/"
+  redirect "/votes"
 end
 
