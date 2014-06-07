@@ -51,6 +51,9 @@ a:hover {
   font-weight: 100;
 }
 
+.login {
+  margin-top: 40px;
+}
 /*------------------ Jumbotron -------------------*/
 .jumbotron {
   background: white;

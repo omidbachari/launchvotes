@@ -7,6 +7,14 @@
   <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,100' rel='stylesheet' type='text/css'>
 </head>
 <body>
+  <header>
+    <div class="row">
+      <div class="col-md-4 nav">
+        <h1> <img class="logo" src="/assets/logo.png"> <a href="/">LaunchVotes</a></h1>
+      </div>
+      <div class="col-md-2 nav"><a class="login" href="/auth/github">Login</a></div>
+    </div>
+  </header>
   <%= yield %>
 </body>
 </html>
