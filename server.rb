@@ -76,12 +76,29 @@ helpers do
 end
 
 #------------------------------------------ Methods ------------------------------------------
+
+def display_votes?
+  time = Time.now
+  if time.hour > 17
+    return true
+  end
+  false
+end
+
 def get_award_info
   connection = PG.connect(settings.database_config)
-  award_info = connection.exec('SELECT nominations.nominee_id, nominations.id, nominations.votes, nominations.content,
-                                nominations.created_at, users.name, users.pic_url FROM nominations
-                                LEFT JOIN users ON users.uid = nominations.nominee_id
-                                ORDER BY nominations.created_at DESC')
+  award_info = nil
+  if display_votes?
+    award_info = connection.exec('SELECT nominations.nominee_id, nominations.id, nominations.votes, nominations.content,
+                                  nominations.created_at, users.name, users.pic_url FROM nominations
+                                  LEFT JOIN users ON users.uid = nominations.nominee_id
+                                  ORDER BY nominations.votes DESC')
+  else
+    award_info = connection.exec('SELECT nominations.nominee_id, nominations.id, nominations.votes, nominations.content,
+                                  nominations.created_at, users.name, users.pic_url FROM nominations
+                                  LEFT JOIN users ON users.uid = nominations.nominee_id
+                                  ORDER BY nominations.created_at DESC')
+  end
   connection.close
   award_info.to_a
 end
@@ -144,6 +161,7 @@ get '/' do
 end
 
 get '/votes' do
+  @display = display_votes?
   @uid = session["uid"]
   authorize!
   @users = get_names

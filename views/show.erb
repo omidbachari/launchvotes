@@ -27,7 +27,7 @@
   </div>
 
   <div class="awards-container">
-    <div class="col-md-12"><h1 class="title">Nominations</h1></div>
+    <div class="col-md-12"><h1 class="title center">Nominations</h1></div>
     <div class="row nomination-line">
       <% if @get_award_info == [] %>
         <div class="col-md-8 col-md-offset-4"><h1 class="make-nom">Make the first nomination!</h1></div>
@@ -40,9 +40,15 @@
                   <img class="ribbon" src="../assets/ribbon.png">
                 </div>
                 <div class="top votes">
-                  <form action="/<%= award["id"]%>" method="post">
-                    <input type="submit" value="vote" class="votes">
-                  </form>
+                  <% if @display == true %>
+                    <form action="/<%= award["id"]%>" method="post">
+                      <input type="submit" value="<%= award["votes"] %>" class="votes" disabled>
+                    </form>
+                  <% else %>
+                    <form action="/<%= award["id"]%>" method="post">
+                      <input type="submit" value="vote" class="votes">
+                    </form>
+                  <% end %>
                 </div>
                 <div class="under">
                   <% if award["pic_url"] == nil %>
