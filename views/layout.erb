@@ -13,7 +13,9 @@
         <h1> <img class="logo" src="/assets/logo.png"> <a href="/">LaunchVotes</a></h1>
       </div>
       <div class="col-md-2 nav"><a class="login" href="/auth/github">Login</a></div>
-      <div class="col-md-2 nav"><a class="login" href="/sign_out">Signout</a></div>
+      <% if signed_in? %>
+        <div class="col-md-2 nav"><a class="login" href="/sign_out">Signout</a></div>
+      <% end %>
     </div>
   </header>
   <%= yield %>

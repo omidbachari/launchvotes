@@ -30,35 +30,37 @@
   </div>
 
   <div class="awards-container">
-    <div class="col-md-12"><h1 class="title">Nominations</h1><p>...click ribbon to upvote</p></div>
+    <div class="col-md-12"><h1 class="title">Nominations</h1></div>
     <div class="row nomination-line">
       <% if @get_award_info == [] %>
         <div class="col-md-8 col-md-offset-4"><h1 class="make-nom">Make the first nomination!</h1></div>
       <% else %>
         <% @get_award_info.each do |award| %>
-          <div class="col-md-3">
-            <div class="award">
-              <div class="over">
-                <img class="ribbon" src="../assets/ribbon.png">
+        <% if award["nominee_id"] != session["uid"] %>
+            <div class="col-md-3">
+              <div class="award">
+                <div class="over">
+                  <img class="ribbon" src="../assets/ribbon.png">
+                </div>
+                <div class="top votes">
+                  <form action="/<%= award["id"]%>" method="post">
+                    <input type="submit" value="vote" class="votes">
+                  </form>
+                </div>
+                <div class="under">
+                  <% if award["pic_url"] == nil %>
+                    <img class="prof-pic" src="../assets/placeholder.jpg">
+                  <% else %>
+                    <img class="prof-pic" src="<%= award["pic_url"] %>">
+                  <% end %>
+                </div>
+                <div>
+                  <h2 class="launcher-name"><%= award["name"] %></h2>
+                </div>
+                <h2 class="award-title"><%= award["content"] %></h2>
               </div>
-              <div class="top votes">
-                <form action="/<%= award["id"]%>" method="post">
-                  <input type="submit" value="?" class="votes">
-                </form>
-              </div>
-              <div class="under">
-                <% if award["pic_url"] == nil %>
-                  <img class="prof-pic" src="../assets/placeholder.jpg">
-                <% else %>
-                  <img class="prof-pic" src="<%= award["pic_url"] %>">
-                <% end %>
-              </div>
-              <div>
-                <h2 class="launcher-name"><%= award["name"] %></h2>
-              </div>
-              <h2 class="award-title"><%= award["content"] %></h2>
             </div>
-          </div>
+          <% end %>
         <% end %>
       <% end %>
     </div>

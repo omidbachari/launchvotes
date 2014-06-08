@@ -78,7 +78,7 @@ end
 #------------------------------------------ Methods ------------------------------------------
 def get_award_info
   connection = PG.connect(settings.database_config)
-  award_info = connection.exec('SELECT nominations.id, nominations.votes, nominations.content,
+  award_info = connection.exec('SELECT nominations.nominee_id, nominations.id, nominations.votes, nominations.content,
                                 nominations.created_at, users.name, users.pic_url FROM nominations
                                 LEFT JOIN users ON users.uid = nominations.nominee_id
                                 ORDER BY nominations.created_at DESC')
@@ -108,11 +108,20 @@ def upvote_comment(id)
   end
 end
 
+# Method that cycles thru the array of hashes for all uid's in our database
+def include_uid?(uid, data)
+  data.each do |hash|
+    return true if hash["uid"] == uid
+  end
+  false
+end
+
 def find_or_create(attributes)
   connection = PG.connect(settings.database_config)
   uids = connection.exec('SELECT uid FROM users')
   uids = uids.to_a
-  if !uids.include?(attributes[:uid])
+
+  if !include_uid?(attributes[:uid], uids)
     sql = "INSERT INTO users (uid, email, pic_url, name) VALUES ($1, $2, $3, $4)"
     connection.exec_params(sql, [attributes[:uid], attributes[:email], attributes[:avatar_url], attributes[:name]])
   end
@@ -120,6 +129,7 @@ end
 
 #------------------------------------------ Routes ------------------------------------------
 get '/' do
+  signed_in?
   erb :index
 end
 
