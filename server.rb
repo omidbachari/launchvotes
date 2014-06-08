@@ -65,9 +65,8 @@ end
 
 helpers do
   def current_user
-    id = session['user_id']
     # Change to read from database
-    @current_user ||= User.find_by_id(id)
+    @current_user ||= session['uid']
   end
 
   # As long as the output from our method above (current_user) is NOT nil, then the user is signed in
@@ -81,7 +80,7 @@ def get_award_info
   connection = PG.connect(settings.database_config)
   award_info = connection.exec('SELECT nominations.id, nominations.votes, nominations.content,
                                 nominations.created_at, users.name, users.pic_url FROM nominations
-                                LEFT JOIN users ON users.id = nominations.nominee_id
+                                LEFT JOIN users ON users.uid = nominations.nominee_id
                                 ORDER BY nominations.created_at DESC')
   connection.close
   award_info.to_a
@@ -109,12 +108,23 @@ def upvote_comment(id)
   end
 end
 
+def find_or_create(attributes)
+  connection = PG.connect(settings.database_config)
+  uids = connection.exec('SELECT uid FROM users')
+  uids = uids.to_a
+  if !uids.include?(attributes[:uid])
+    sql = "INSERT INTO users (uid, email, pic_url, name) VALUES ($1, $2, $3, $4)"
+    connection.exec_params(sql, [attributes[:uid], attributes[:email], attributes[:avatar_url], attributes[:name]])
+  end
+end
+
 #------------------------------------------ Routes ------------------------------------------
 get '/' do
   erb :index
 end
 
 get '/votes' do
+  @uid = session["uid"]
   authorize!
   @users = get_names
   @get_award_info = get_award_info
@@ -129,29 +139,29 @@ get '/auth/:provider/callback' do
   # Build a hash that represents the user from the info given back from either
   # Facebook or Github
   user_attributes = {
+    name: auth['info']['name'],
     uid: auth['uid'],
-    provider: auth['provider'],
     email: auth['info']['email'],
     avatar_url: auth['info']['image']
   }
 
-  user = User.create(user_attributes)
+  find_or_create(user_attributes)
+  # user = User.create(user_attributes)
 
   # Save the id of the user that's logged in inside the session
-  session["user_id"] = user.id
+  session["uid"] = user_attributes[:uid]
   redirect '/votes'
 end
 
 get '/sign_out' do
   # Sign the user out by removing the id from the session
-  session["user_id"] = nil
+  session["uid"] = nil
   redirect '/'
 end
 
 
 post '/' do
   add_award_info(params["nominations_content"], 0, params["nominee_id"].to_i)
-  binding.pry
   redirect '/votes'
 end
 
