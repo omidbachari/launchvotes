@@ -10,11 +10,15 @@
   <header>
     <div class="row">
       <div class="col-md-4 nav">
-        <h1> <img class="logo" src="/assets/logo.png"> <a href="/">LaunchVotes</a></h1>
+        <h1> <img class="logo" src="/assets/logo.png"> <a href="#">LaunchVotes</a></h1>
       </div>
-      <div class="col-md-2 nav"><a class="login" href="/auth/github">Login</a></div>
       <% if signed_in? %>
-        <div class="col-md-2 nav"><a class="login" href="/sign_out">Signout</a></div>
+      <div class="col-md-2 nav col-md-offset-6 visible-lg" id="nav-profile">
+        <div>
+          <a class="nav-signout" href="/sign_out">Signout</a>
+          <img class="tiny-img" src="<%= session["pic"] %>">
+        </div>
+      </div>
       <% end %>
     </div>
   </header>

@@ -15,5 +15,9 @@ CREATE TABLE nominations (
 );
 
 -- CREATE TABLE votes (
---   nominee_id varchar95o
--- )
+--   nominator_id varchar(50) NOT NULL REFERENCES users(uid),
+--   nomination_id integer(50) NOT NULL REFERENCES nominations(id)
+-- );
+
+-- CREATE UNIQUE INDEX unique_vote ON votes (nominator_id, nomination_id);
+

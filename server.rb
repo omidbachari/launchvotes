@@ -86,6 +86,16 @@ def get_award_info
   award_info.to_a
 end
 
+def intro_award_info
+  connection = PG.connect(settings.database_config)
+  award_info = connection.exec('SELECT nominations.nominee_id, nominations.id, nominations.votes, nominations.content,
+                                nominations.created_at, users.name, users.pic_url FROM nominations
+                                LEFT JOIN users ON users.uid = nominations.nominee_id
+                                ORDER BY nominations.created_at DESC')
+  connection.close
+  award_info.to_a
+end
+
 def get_names
   connection = PG.connect(settings.database_config)
   names = connection.exec('SELECT * FROM users ORDER BY name')
@@ -129,7 +139,7 @@ end
 
 #------------------------------------------ Routes ------------------------------------------
 get '/' do
-  signed_in?
+  @teaser_awards = intro_award_info
   erb :index
 end
 
@@ -160,6 +170,7 @@ get '/auth/:provider/callback' do
 
   # Save the id of the user that's logged in inside the session
   session["uid"] = user_attributes[:uid]
+  session["pic"] = user_attributes[:avatar_url]
   redirect '/votes'
 end
 
