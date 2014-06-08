@@ -91,7 +91,7 @@ def intro_award_info
   award_info = connection.exec('SELECT nominations.nominee_id, nominations.id, nominations.votes, nominations.content,
                                 nominations.created_at, users.name, users.pic_url FROM nominations
                                 LEFT JOIN users ON users.uid = nominations.nominee_id
-                                ORDER BY nominations.created_at DESC')
+                                ORDER BY nominations.votes')
   connection.close
   award_info.to_a
 end
