@@ -1,11 +1,20 @@
-<div class="container">
-  <div class="intro-container">
-    <div class="center col-md-12">
-      <h1 class="welcome">Welcome to LaunchVotes!</h1>
-    </div>
-    <div class="center col-md-12">
+<div class="jumbotron hidden-xs">
+  <div class="container jumbo-content">
+    <div class="col-md-12 center">
+      <h1 class="welcome">Welcome to LaunchVotes</h1>
       <h1 class="description">For Weekly Nominations</h1>
     </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="intro-container">
+<!--     <div class="center col-md-12">
+      <h1 class="welcome">Welcome to LaunchVotes!</h1>
+    </div> -->
+<!--     <div class="center col-md-12">
+      <h1 class="description">For Weekly Nominations</h1>
+    </div> -->
   </div>
 
   <div class="form-container">
@@ -22,7 +31,7 @@
   </div>
 
   <div class="awards-container">
-    <div class="col-md-12"><h1 class="title">Last Week's Winners</h1></div>
+    <div class="col-md-12"><h1 class="title">Last Week's Top Votes:</h1></div>
     <div class="row nomination-line">
       <% if @get_award_info == [] %>
         <div class="col-md-8 col-md-offset-4"><h1 class="make-nom">Make the first nomination!</h1></div>
