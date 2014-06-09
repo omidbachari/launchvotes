@@ -79,7 +79,7 @@ end
 
 def display_votes?
   time = Time.now
-  if time.hour > 17
+  if time.hour > 17 && time.wday == 6
     return true
   end
   false
