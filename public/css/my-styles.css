@@ -106,6 +106,20 @@ a:hover {
 .white {
   color: white;
 }
+
+.pink {
+  color: #ed197b;
+}
+
+.linkedin {
+  color: #1a85bc;
+}
+
+.thumbnail {
+  height: 50px;
+  width: 50px;
+  border-radius: 150px;
+}
 /*------------------ Jumbotron -------------------*/
 .jumbotron {
   background: white;
@@ -269,6 +283,11 @@ form input[type=text] {
   font-size: 3em;
   font-weight: 100;
   color: #34495e;
+}
+
+.name {
+  font-size: 2em;
+  font-weight: 100;
 }
 
 .justify {
