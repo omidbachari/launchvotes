@@ -99,8 +99,6 @@ a:hover {
   margin-top: 10px;
 }
 
-
-
 .blk {
   color: black;
 }
@@ -108,7 +106,6 @@ a:hover {
 .white {
   color: white;
 }
-
 /*------------------ Jumbotron -------------------*/
 .jumbotron {
   background: white;
@@ -131,11 +128,11 @@ a:hover {
   font-size: 2em;
 }
 
-/*.jumbo-content {
-  padding-top: 100px;
-  padding-bottom: 100px;
+.jumbo-content {
+  padding-top: 50px;
+  padding-bottom: 50px;
 }
-*/
+
 .jumbotron .welcome {
   font-family: 'Roboto', sans-serif;
   font-weight: 100;
@@ -264,6 +261,20 @@ form input[type=text] {
   font-weight: 100;
 }
 
+.asphalt {
+  color: #ed197b;
+}
+
+.about{
+  font-size: 3em;
+  font-weight: 100;
+  color: #34495e;
+}
+
+.justify {
+  text-align: justify;
+}
+
 .award-title {
   font-weight: 100;
 }
@@ -302,6 +313,23 @@ form input[type=text] {
   border-radius: 150px;
 }
 
+/*------------------ Footer -------------------*/
+.footer {
+  height: 200px;
+  width: 100%;
+  background: #ed197b;
+  border-bottom: 4px solid #d60c67;
+  margin-bottom: -50px;
+  margin-top: 100px;
+}
+
+.footer-info {
+  padding-top: 75px;
+}
+
+.powered {
+  margin-top: 15px;
+}
 /*------------------ Media Queries -------------------*/
 @media (min-width: 768px) {
   .jumbotron {

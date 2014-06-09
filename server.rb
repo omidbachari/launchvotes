@@ -85,6 +85,25 @@ def display_votes?
   false
 end
 
+# def current_week
+#   week = 604800
+#   current_week_noms = []
+#   connection = PG.connect(settings.database_config)
+#   nominations = connection.exec('SELECT * FROM nominations').to_a
+#   current_time = connection.exec('SELECT EXTRACT( EPOCH FROM now())').to_a
+#   created_sql = "SELECT EXTRACT(EPOCH FROM TIMESTAMP $1)"
+#   nominations.each do |nomination|
+#     nomination["created_at"]
+#     created = connection.exec_params(created_sql, [nomination["created_at"]]).to_a
+#     binding.pry
+#     if current_time["date_part"].to_f - created["date_part"].to_f < week
+#       current_week_noms << nomination
+#     end
+#   end
+#   current_week_noms
+#   binding.pry
+# end
+
 def get_award_info
   connection = PG.connect(settings.database_config)
   award_info = nil
