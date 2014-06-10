@@ -85,51 +85,55 @@ def display_votes?
   false
 end
 
-# def current_week
-#   week = 604800
-#   current_week_noms = []
-#   connection = PG.connect(settings.database_config)
-#   nominations = connection.exec('SELECT * FROM nominations').to_a
-#   current_time = connection.exec('SELECT EXTRACT( EPOCH FROM now())').to_a
-#   created_sql = "SELECT EXTRACT(EPOCH FROM TIMESTAMP $1)"
-#   nominations.each do |nomination|
-#     nomination["created_at"]
-#     created = connection.exec_params(created_sql, [nomination["created_at"]]).to_a
-#     binding.pry
-#     if current_time["date_part"].to_f - created["date_part"].to_f < week
-#       current_week_noms << nomination
-#     end
-#   end
-#   current_week_noms
-#   binding.pry
-# end
-
-def get_award_info
+def current_week
+  week = 604800
+  current_week_noms = []
   connection = PG.connect(settings.database_config)
-  award_info = nil
   if display_votes?
-    award_info = connection.exec('SELECT nominations.nominee_id, nominations.id, nominations.votes, nominations.content,
+    nominations = connection.exec('SELECT nominations.nominee_id, nominations.id, nominations.votes, nominations.content,
                                   nominations.created_at, users.name, users.pic_url FROM nominations
                                   LEFT JOIN users ON users.uid = nominations.nominee_id
-                                  ORDER BY nominations.votes DESC')
+                                  ORDER BY nominations.votes DESC').to_a
   else
-    award_info = connection.exec('SELECT nominations.nominee_id, nominations.id, nominations.votes, nominations.content,
+    nominations = connection.exec('SELECT nominations.nominee_id, nominations.id, nominations.votes, nominations.content,
                                   nominations.created_at, users.name, users.pic_url FROM nominations
                                   LEFT JOIN users ON users.uid = nominations.nominee_id
-                                  ORDER BY nominations.created_at DESC')
+                                  ORDER BY nominations.created_at DESC').to_a
   end
-  connection.close
-  award_info.to_a
+  current_time = connection.exec('SELECT EXTRACT( EPOCH FROM now())').first
+
+  nominations.each do |nomination|
+    created_sql = "SELECT EXTRACT(EPOCH FROM TIMESTAMP '#{nomination["created_at"]}')"
+    created = connection.exec(created_sql).first
+
+    if current_time["date_part"].to_f - created["date_part"].to_f < week
+      current_week_noms << nomination
+    end
+  end
+  current_week_noms
 end
 
 def intro_award_info
+  week = 604800
+  last_week = 604800*2
+  last_week_noms = []
   connection = PG.connect(settings.database_config)
-  award_info = connection.exec('SELECT nominations.nominee_id, nominations.id, nominations.votes, nominations.content,
+  nominations = connection.exec('SELECT nominations.nominee_id, nominations.id, nominations.votes, nominations.content,
                                 nominations.created_at, users.name, users.pic_url FROM nominations
                                 LEFT JOIN users ON users.uid = nominations.nominee_id
-                                ORDER BY nominations.votes DESC LIMIT 4')
-  connection.close
-  award_info.to_a
+                                ORDER BY nominations.votes DESC')
+  current_time = connection.exec('SELECT EXTRACT( EPOCH FROM now())').first
+
+  nominations.each do |nomination|
+    created_sql = "SELECT EXTRACT(EPOCH FROM TIMESTAMP '#{nomination["created_at"]}')"
+    created = connection.exec(created_sql).first
+
+    date_check = current_time["date_part"].to_f - created["date_part"].to_f
+    if date_check > week && date_check < last_week
+      last_week_noms << nomination
+    end
+  end
+  last_week_noms.take(4)
 end
 
 def get_names
@@ -184,7 +188,7 @@ get '/votes' do
   @uid = session["uid"]
   authorize!
   @users = get_names
-  @get_award_info = get_award_info
+  @get_award_info = current_week
   erb :show
 end
 

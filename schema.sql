@@ -20,4 +20,3 @@ CREATE TABLE nominations (
 -- );
 
 -- CREATE UNIQUE INDEX unique_vote ON votes (nominator_id, nomination_id);
-
