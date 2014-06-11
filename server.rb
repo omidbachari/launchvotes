@@ -197,6 +197,7 @@ get '/auth/:provider/callback' do
   # This is returns a hash with all of the information sent back by the
   # service (Github or Facebook)
   auth = env['omniauth.auth']
+  auth_token =
 
   # Build a hash that represents the user from the info given back from either
   # Facebook or Github
@@ -213,22 +214,26 @@ get '/auth/:provider/callback' do
   # Save the id of the user that's logged in inside the session
   session["uid"] = user_attributes[:uid]
   session["pic"] = user_attributes[:avatar_url]
+  flash[:notice] = "You have signed in as #{user_attributes[:name]}"
   redirect '/votes'
 end
 
 get '/sign_out' do
   # Sign the user out by removing the id from the session
   session["uid"] = nil
+  flash[:notice] = "You have signed out"
   redirect '/'
 end
 
 
 post '/' do
   add_award_info(params["nominations_content"], 0, params["nominee_id"].to_i)
+  flash[:notice] = "You're nomination has been made!"
   redirect '/votes'
 end
 
 post '/:nominations_id' do
+  flash[:notice] = "You have voted!"
   # Update comments.vote +1 where params["comment"] =  comments.id
   upvote_comment(params[:nominations_id])
   redirect "/votes"

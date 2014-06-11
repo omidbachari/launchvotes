@@ -18,6 +18,15 @@ body {
     width: 50px;
 }
 
+.flash {
+  width: 100%;
+  height: 50px;
+  background: #ed197b !important;
+  text-align: center;
+  padding: 15px 10px 15px 20px;
+  color: white;
+}
+
 /*------------------ Header -------------------*/
 
 .roboto-sm {

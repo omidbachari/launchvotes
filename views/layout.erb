@@ -22,7 +22,13 @@
       <% end %>
     </div>
   </header>
-
+  <% if flash.any? %>
+    <div class="flash">
+      <div class="container">
+        <%= flash[:notice] %>
+      </div>
+    </div>
+  <% end %>
   <%= yield %>
 
   <div class="footer">
