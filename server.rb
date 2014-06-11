@@ -21,7 +21,8 @@ configure do
   enable :sessions
 
   use OmniAuth::Builder do
-    provider :github, ENV['GITHUB_KEY'], ENV['GITHUB_SECRET']
+    provider :github, ENV['GITHUB_KEY'], ENV['GITHUB_SECRET'],
+    scope: 'read:org'
   end
 end
 
