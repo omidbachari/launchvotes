@@ -12,7 +12,7 @@ gem 'sinatra-contrib'
 gem 'sinatra-flash'
 gem 'omniauth-github'
 gem 'omniauth-facebook'
-# gem 'pg'
+gem 'pg'
 
 group :development, :test do
   gem 'dotenv'
