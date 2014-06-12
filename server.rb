@@ -197,7 +197,7 @@ get '/auth/:provider/callback' do
   # This is returns a hash with all of the information sent back by the
   # service (Github or Facebook)
   auth = env['omniauth.auth']
-  auth_token =
+  # auth_token =
 
   # Build a hash that represents the user from the info given back from either
   # Facebook or Github
