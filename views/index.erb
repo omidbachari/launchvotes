@@ -30,7 +30,7 @@
   <div class="awards-container">
     <div class="col-md-12"><h1 class="title center"><span class="asphalt">Recent Top Votes</span></h1></div>
     <div class="row nomination-line">
-      <% if @get_award_info == [] %>
+      <% if @get_award_info == nil %>
         <div class="col-md-8 col-md-offset-4"><h1 class="make-nom">Make the first nomination!</h1></div>
       <% else %>
         <% @teaser_awards.each do |award| %>
