@@ -13,6 +13,7 @@ gem 'sinatra-flash'
 gem 'omniauth-github'
 gem 'omniauth-facebook'
 gem 'pg'
+gem 'dotenv'
 
 group :development, :test do
   gem 'dotenv'
