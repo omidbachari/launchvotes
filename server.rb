@@ -79,7 +79,7 @@ end
 #------------------------------------------ Methods ------------------------------------------
 
 def display_votes?
-  true
+  return false
 end
 
 def current_week
