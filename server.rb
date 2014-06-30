@@ -79,11 +79,7 @@ end
 #------------------------------------------ Methods ------------------------------------------
 
 def display_votes?
-  time = Time.now
-  if time.hour > 17 && time.wday == 5
-    return true
-  end
-  false
+  true
 end
 
 def current_week
