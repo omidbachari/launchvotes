@@ -224,7 +224,7 @@ end
 
 post '/' do
   add_award_info(params["nominations_content"], 0, params["nominee_id"].to_i)
-  flash[:notice] = "You're nomination has been made!"
+  flash[:notice] = "Your nomination has been made!"
   redirect '/votes'
 end
 
