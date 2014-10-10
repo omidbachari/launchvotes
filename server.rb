@@ -8,8 +8,9 @@ require 'sinatra/flash'
 require 'omniauth-github'
 require 'pg'
 
-require_relative 'models/user'
-
+Dir[File.join(File.dirname(__FILE__), 'app', '**', '*.rb')].each do |file|
+  require file
+end
 
 configure :development do
   require 'pry'

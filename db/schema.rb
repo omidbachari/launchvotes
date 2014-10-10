@@ -17,14 +17,16 @@ ActiveRecord::Schema.define(version: 20141010221713) do
   enable_extension "plpgsql"
 
   create_table "nominations", force: true do |t|
-    t.string   "content",    null: false
-    t.integer  "user_id",    null: false
+    t.string   "content",      null: false
+    t.integer  "nominee_id",   null: false
+    t.integer  "nominator_id", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "users", force: true do |t|
     t.string   "uid",        null: false
+    t.string   "provider",   null: false
     t.string   "email",      null: false
     t.string   "name",       null: false
     t.string   "pic_url",    null: false
@@ -32,9 +34,13 @@ ActiveRecord::Schema.define(version: 20141010221713) do
     t.datetime "updated_at"
   end
 
+  add_index "users", ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true, using: :btree
+
   create_table "votes", force: true do |t|
-    t.integer "nomination_id", null: false
-    t.integer "user_id",       null: false
+    t.integer  "nomination_id", null: false
+    t.integer  "user_id",       null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "votes", ["nomination_id", "user_id"], name: "index_votes_on_nomination_id_and_user_id", unique: true, using: :btree
