@@ -1,9 +1,10 @@
+require_relative '../server.rb'
+
 require 'database_cleaner'
 require 'factory_girl'
 require 'pry'
 require 'rspec'
-
-require_relative '../server.rb'
+require 'shoulda/matchers'
 
 set :environment, :test
 set :database, :test
