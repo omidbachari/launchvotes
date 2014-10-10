@@ -2,7 +2,7 @@ class User
   # This is a stand in for a database
   @@all = []
 
-  attr_reader :id,
+  attr_accessor :id,
     :uid,
     :provider,
     :email,
