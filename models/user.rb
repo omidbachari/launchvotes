@@ -10,4 +10,16 @@ class User < ActiveRecord::Base
   validates :email, presence: true
   validates :name, presence: true
   validates :pic_url, presence: true
+
+  def self.from_omniauth(auth)
+    user_attributes = {
+      uid: auth.uid,
+      provider: auth.provider,
+      name: auth.info.name,
+      email: auth.info.email,
+      pic_url: auth.info.image
+    }
+
+    find_or_initialize_by(user_attributes)
+  end
 end

@@ -12,8 +12,10 @@ gem 'sinatra-contrib'
 gem 'sinatra-flash'
 
 group :development, :test do
+  gem 'capybara'
   gem 'database_cleaner'
   gem 'factory_girl'
+  gem 'launchy'
   gem 'pry'
   gem 'rspec'
   gem 'shoulda-matchers'

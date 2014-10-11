@@ -8,7 +8,7 @@ require 'sinatra/flash'
 require 'omniauth-github'
 require 'pg'
 
-Dir[File.join(File.dirname(__FILE__), 'app', '**', '*.rb')].each do |file|
+Dir[File.join(File.dirname(__FILE__), 'models', '**', '*.rb')].each do |file|
   require file
 end
 
@@ -19,6 +19,7 @@ end
 
 configure do
   enable :sessions
+  set :session_secret, ENV['SESSION_SECRET']
 
   use OmniAuth::Builder do
     provider :github, ENV['GITHUB_KEY'], ENV['GITHUB_SECRET'],
@@ -66,8 +67,7 @@ end
 
 helpers do
   def current_user
-    # Change to read from database
-    @current_user ||= session['uid']
+    User.find(session['user_id']) if session['user_id']
   end
 
   # As long as the output from our method above (current_user) is NOT nil, then the user is signed in
@@ -176,7 +176,7 @@ end
 
 #------------------------------------------ Routes ------------------------------------------
 get '/' do
-  @teaser_awards = intro_award_info
+  #@teaser_awards = intro_award_info
   erb :index
 end
 
@@ -190,28 +190,17 @@ get '/votes' do
 end
 
 get '/auth/:provider/callback' do
-  # This is returns a hash with all of the information sent back by the
-  # service (Github or Facebook)
-  auth = env['omniauth.auth']
-  # auth_token =
+  binding.pry
+  user = User.from_omniauth(env['omniauth.auth'])
 
-  # Build a hash that represents the user from the info given back from either
-  # Facebook or Github
-  user_attributes = {
-    name: auth['info']['name'],
-    uid: auth['uid'],
-    email: auth['info']['email'],
-    avatar_url: auth['info']['image']
-  }
-
-  find_or_create(user_attributes)
-  # user = User.create(user_attributes)
-
-  # Save the id of the user that's logged in inside the session
-  session["uid"] = user_attributes[:uid]
-  session["pic"] = user_attributes[:avatar_url]
-  flash[:notice] = "You have signed in as #{user_attributes[:name]}"
-  redirect '/votes'
+  if user.save
+    session['user_id'] = user.id
+    flash[:notice] = "You have signed in as #{user.name}"
+    redirect '/votes'
+  else
+    flash[:error] = "There was a problem signing in."
+    redirect '/'
+  end
 end
 
 get '/sign_out' do
