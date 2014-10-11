@@ -1,25 +1,16 @@
-<div class="form-container">
-  <div class="col-md-6 col-md-offset-3">
-    <div class="form">
-      <div>
-        <h1 class="center">Nominate a Fellow Launcher:</h1>
-      </div>
-      <form action="/nominations" method="post">
-        <div>
-          <label for="nomination_nominee_id">Nominee</label>
-          <select class="roboto-sm" id="nomination_nominee_id" name="nomination[nominee_id]">
-            <option default>Choose Launcher</option>
-            <% @users.each do |user| %>
-              <option value="<%= user.id %>"><%= user.name %></option>
-            <% end %>
-          </select>
-        </div>
-        <label for="nomination_content">Content</label>
-        <input type="text" maxlength="40" class="roboto-sm" placeholder="Enter nomination (ex: <%= Nomination.examples.sample %>)." id="nomination_content" name="nomination[content]" required />
-        <div>
-          <input type="submit" value="Submit" class="btn-submit roboto-sm"></input>
-        </div>
-      </form>
+<div class="container">
+  <%= erb :nominate %>
+
+  <div class="awards-container">
+    <div class="col-md-12"><h1 class="title center">Nominations</h1></div>
+    <div class="row nomination-line">
+      <% if @nominations.empty? %>
+        <div class="col-md-8 col-md-offset-4"><h1 class="make-nom">Make the first nomination!</h1></div>
+      <% else %>
+        <% @nominations.each do |award| %>
+          <%= erb :award, locals: { award: award } %>
+        <% end %>
+      <% end %>
     </div>
   </div>
 </div>

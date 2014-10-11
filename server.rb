@@ -72,7 +72,8 @@ end
 get '/nominations' do
   authorize!
   @users = User.all
-  erb :show
+  @nominations = Nomination.this_week
+  erb :nominations
 end
 
 post '/nominations' do
@@ -93,7 +94,7 @@ post '/nominations' do
   redirect '/nominations'
 end
 
-post '/:nominations_id' do
-  flash[:notice] = "You have voted!"
-  redirect "/votes"
-end
+# post '/:nominations_id' do
+#   flash[:notice] = "You have voted!"
+#   redirect "/votes"
+# end
