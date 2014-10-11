@@ -8,7 +8,7 @@ FactoryGirl.define do
         "Fastest typer",
         "Best spectacles",
         "Best accent",
-        "Most likely to `git push origin master`",
+        "Most likely to `git push origin master -f`",
         "Breakable toy is already funded on Kickstarter"
       ].sample
     end

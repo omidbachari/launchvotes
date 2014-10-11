@@ -11,6 +11,6 @@ RSpec.describe Vote, model: true do
     vote = FactoryGirl.create(:vote)
     second_vote = FactoryGirl.build(:vote, nomination: vote.nomination, user: vote.user)
 
-    expect { second_vote.save!}.to raise_error(ActiveRecord::RecordInvalid)
+    expect { second_vote.save! }.to raise_error(ActiveRecord::RecordInvalid)
   end
 end

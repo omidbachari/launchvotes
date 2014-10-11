@@ -15,6 +15,6 @@ RSpec.describe User, model: true do
     user = FactoryGirl.create(:user)
     second_user = FactoryGirl.build(:user, uid: user.uid, provider: user.provider)
 
-    expect { second_user.save!}.to raise_error(ActiveRecord::RecordInvalid)
+    expect { second_user.save! }.to raise_error(ActiveRecord::RecordInvalid)
   end
 end
