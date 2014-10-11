@@ -1,8 +1,7 @@
 module AuthenticationHelper
   def login_as(user)
     mock_omni_auth_for(user)
-    visit '/'
-    click_button "Login with GitHub"
+    visit "/auth/#{user.provider}"
   end
 
   def mock_omni_auth_for(user)

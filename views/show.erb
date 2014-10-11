@@ -1,70 +1,13 @@
 <div class="container">
-  <div class="form-container">
-    <div class="col-md-6 col-md-offset-3">
-      <div class="form">
-      <div>
-        <h1 class="center">Nominate a Fellow Launcher:</h1>
-      </div>
-      <form action="/" method="post">
-        <div>
-          <select class="roboto-sm" id="nominee" name="nominee_id">
-            <option default>Choose Launcher</option>
-            <% @users.each do |user| %>
-              <!-- Cant' nominate yourself -->
-              <% if user["uid"] != session["uid"]%>
-                <option value="<%= user["uid"] %>"><%= user["name"] %></option>
-              <% end %>
-            <% end %>
-          </select>
-        </div>
-        <input type="text" maxlength="40" class="roboto-sm" placeholder="Enter nomination (ex: Best hairdo)." name="nominations_content" required/>
-        <div>
-          <input type="submit" class="btn-submit roboto-sm"></input>
-        </div>
-      </form>
-      </div>
-    </div>
-  </div>
+  <%= erb :nominations %>
 
   <div class="awards-container">
     <div class="col-md-12"><h1 class="title center">Nominations</h1></div>
     <div class="row nomination-line">
-      <% if @get_award_info == [] %>
+      <% if !@get_award_info %>
         <div class="col-md-8 col-md-offset-4"><h1 class="make-nom">Make the first nomination!</h1></div>
       <% else %>
-        <% @get_award_info.each do |award| %>
-        <% if award["nominee_id"] != session["uid"] %>
-            <div class="col-md-3">
-              <div class="award">
-                <div class="over">
-                  <img class="ribbon" src="../assets/ribbon.png">
-                </div>
-                <div class="top votes">
-                  <% if @display == true %>
-                    <form action="/<%= award["id"]%>" method="post">
-                      <input type="submit" value="<%= award["votes"] %>" class="votes" disabled>
-                    </form>
-                  <% else %>
-                    <form action="/<%= award["id"]%>" method="post">
-                      <input type="submit" value="vote" class="votes">
-                    </form>
-                  <% end %>
-                </div>
-                <div class="under">
-                  <% if award["pic_url"] == nil %>
-                    <img class="prof-pic" src="../assets/placeholder.jpg">
-                  <% else %>
-                    <img class="prof-pic" src="<%= award["pic_url"] %>">
-                  <% end %>
-                </div>
-                <div>
-                  <h2 class="launcher-name"><%= award["name"] %></h2>
-                </div>
-                <h2 class="award-title"><%= award["content"] %></h2>
-              </div>
-            </div>
-          <% end %>
-        <% end %>
+        <%= erb :award %>
       <% end %>
     </div>
   </div>

@@ -1,0 +1,5 @@
+<% flash.keys.each do |type| %>
+  <div class="flash flash-<%= type %>">
+    <div class="container"><%= flash[type] %></div>
+  </div>
+<% end %>
