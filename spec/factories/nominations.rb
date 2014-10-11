@@ -3,7 +3,7 @@ FactoryGirl.define do
     sequence(:content) do
       [
         "Most glorious beard",
-        "Best haridoo",
+        "Best hairdo",
         "Most help requests",
         "Fastest typer",
         "Best spectacles",
