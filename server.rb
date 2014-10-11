@@ -66,6 +66,7 @@ get '/sign_out' do
 end
 
 get '/' do
+  redirect '/nominations' if current_user
   erb :index
 end
 
