@@ -17,4 +17,5 @@ group :development, :test do
   gem 'pry'
   gem 'rspec'
   gem 'shoulda-matchers'
+  gem 'valid_attribute'
 end

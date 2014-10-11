@@ -1,6 +1,6 @@
 class Nomination < ActiveRecord::Base
-  belongs_to :nominee, class_name: 'User', foreign_key: :nominee_id
-  belongs_to :nominator, class_name: 'User', foreign_key: :nominator_id
+  belongs_to :nominee, class_name: 'User'
+  belongs_to :nominator, class_name: 'User'
   has_many :votes
 
   validates :content, presence: true

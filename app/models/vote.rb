@@ -3,6 +3,7 @@ class Vote < ActiveRecord::Base
   belongs_to :user
 
   validates :nomination, presence: true
+  validates :nomination, uniqueness:
+    { scope: :user, message: 'You have already voted on this nomination!' }
   validates :user, presence: true
-  validates :user, uniqueness: { scope: :nomination }
 end

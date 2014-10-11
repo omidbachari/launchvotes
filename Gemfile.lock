@@ -99,6 +99,7 @@ GEM
     tilt (1.4.1)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
+    valid_attribute (2.0.0)
 
 PLATFORMS
   ruby
@@ -117,3 +118,4 @@ DEPENDENCIES
   sinatra-activerecord
   sinatra-contrib
   sinatra-flash
+  valid_attribute

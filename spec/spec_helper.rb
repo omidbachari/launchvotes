@@ -5,6 +5,7 @@ require 'factory_girl'
 require 'pry'
 require 'rspec'
 require 'shoulda/matchers'
+require 'valid_attribute'
 
 set :environment, :test
 set :database, :test
