@@ -23,7 +23,7 @@ class Nomination < ActiveRecord::Base
       "Best spectacles",
       "Best accent",
       "Most likely to `git push origin master -f`",
-      "Breakable toy is already funded on Kickstarter"
+      "Breakable toy is funded on Kickstarter"
     ]
   end
 
