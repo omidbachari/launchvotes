@@ -28,4 +28,13 @@ feature 'user views a list of nominations', %q{
     expect(page).to have_content('You need to sign in first.')
   end
 
+  scenario 'nominees cannot see their awards' do
+    nomination = FactoryGirl.create(:nomination, nominee: user)
+
+    login_as user
+    visit '/nominations'
+
+    expect(page).to_not have_content(nomination.content)
+  end
+
 end

@@ -47,7 +47,6 @@ end
 #------------------------------------------ Routes ------------------------------------------
 
 get '/auth/:provider/callback' do
-  binding.pry
   user = User.from_omniauth(env['omniauth.auth'])
 
   if user.save
@@ -74,7 +73,7 @@ end
 get '/nominations' do
   authorize!
   @users = User.all
-  @nominations = Nomination.this_week.includes(:nominee)
+  @nominations = Nomination.this_week.includes(:nominee).where.not(nominee: current_user)
   erb :nominations
 end
 
