@@ -78,6 +78,7 @@ get '/nominations' do
 end
 
 post '/nominations' do
+  authorize!
   nominee = User.find(params[:nomination][:nominee_id])
 
   nomination = Nomination.new(
@@ -95,7 +96,14 @@ post '/nominations' do
   redirect '/nominations'
 end
 
-# post '/:nominations_id' do
-#   flash[:notice] = "You have voted!"
-#   redirect "/votes"
-# end
+post '/nominations/:id/vote' do
+  authorize!
+  nomination = Nomination.find(params[:id])
+  vote = nomination.votes.build(user: current_user)
+  if vote.save
+    flash[:notice] = "You have voted!"
+  else
+    flash[:error] = vote.errors.full_messages.join('! ')
+  end
+  redirect "/nominations"
+end

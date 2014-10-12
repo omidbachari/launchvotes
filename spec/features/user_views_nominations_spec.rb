@@ -23,4 +23,9 @@ feature 'user views a list of nominations', %q{
     end
   end
 
+  scenario 'un-authenticated users are not authorized' do
+    visit '/nominations'
+    expect(page).to have_content('You need to sign in first.')
+  end
+
 end
