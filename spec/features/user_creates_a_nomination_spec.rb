@@ -21,4 +21,14 @@ feature 'user creates a nomination', %q{
     expect(page).to have_content('Your nomination has been made!')
   end
 
+  scenario 'user cannot nominate self' do
+    login_as user
+
+    select user.name, from: 'Nominee'
+    fill_in 'Content', with: 'Best Hairdo'
+    click_on 'Submit'
+
+    expect(page).to have_content('Self nomination detected! Submission rejected.')
+  end
+
 end

@@ -6,6 +6,13 @@ class Nomination < ActiveRecord::Base
   validates :content, presence: true
   validates :nominee, presence: true
   validates :nominator, presence: true
+  validate :nominee_cannot_be_nominator
+
+  def nominee_cannot_be_nominator
+    if nominee == nominator
+      errors.add(:nominee, 'Self nomination detected! Submission rejected.')
+    end
+  end
 
   def self.examples
     [

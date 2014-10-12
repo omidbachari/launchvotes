@@ -90,7 +90,7 @@ post '/nominations' do
     nomination.votes.create(user: current_user)
     flash[:notice] = "Your nomination has been made!"
   else
-    flash[:error] = "You can't do that!"
+    flash[:error] = nomination.errors.full_messages.join
   end
   redirect '/nominations'
 end
