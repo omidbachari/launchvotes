@@ -15,4 +15,7 @@ curl 'https://api.github.com/users/whatever?client_id=xxxx&client_secret=yyyy'
 # List user orginizations
 GET /users/:username/orgs
 GET /user/orgs
+
+# Members of an orginization
+GET /orgs/:org/members
 ```
