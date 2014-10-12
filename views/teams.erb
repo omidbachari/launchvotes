@@ -1,0 +1,27 @@
+<div class="form-container">
+  <div class="col-md-6 col-md-offset-3">
+
+    <div class="form">
+      <div>
+        <h1 class="center">Add a GitHub Team:</h1>
+      </div>
+
+      <form action="/teams" method="post" role="form">
+        <div class="form-group">
+          <label id="github_team_label" for="github_team_id">GitHub Team:</label>
+          <select class="roboto-sm form-control" id="github_team_id" name="github_team[id]">
+            <option default>Choose a Team</option>
+            <% @github_teams.each do |team| %>
+              <option value="<%= team.id %>"><%= team.name %></option>
+            <% end %>
+          </select>
+        </div>
+
+        <div>
+          <input type="submit" value="Import Team" class="btn-submit roboto-sm"></input>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>

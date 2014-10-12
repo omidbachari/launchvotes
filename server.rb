@@ -1,11 +1,12 @@
 require 'dotenv'
 Dotenv.load
 
+require 'octokit'
+require 'omniauth-github'
 require 'sinatra'
 require 'sinatra/activerecord'
 require 'sinatra/reloader'
 require 'sinatra/flash'
-require 'omniauth-github'
 
 Dir[File.join(File.dirname(__FILE__), 'models', '**', '*.rb')].each do |file|
   require file
@@ -34,6 +35,13 @@ def authorize!
   end
 end
 
+def authorize_admin!
+  if !signed_in? || !current_user.is_admin?
+    flash[:notice] = "You are not authorized to view this resource!"
+    redirect '/'
+  end
+end
+
 helpers do
   def current_user
     User.find(session['user_id']) if session['user_id']
@@ -48,10 +56,9 @@ end
 
 get '/auth/:provider/callback' do
   user = User.from_omniauth(env['omniauth.auth'])
-
   if user.save
     session['user_id'] = user.id
-    flash[:notice] = "You have signed in as #{user.name}"
+    flash[:notice] = "You have signed in as #{user.display_name}"
     redirect '/nominations'
   else
     flash[:error] = "There was a problem signing in."
@@ -106,4 +113,19 @@ post '/nominations/:id/vote' do
     flash[:error] = vote.errors.full_messages.join
   end
   redirect "/nominations"
+end
+
+get '/teams' do
+  authorize_admin!
+  @github_teams = GithubTeam.all
+  erb :teams
+end
+
+post '/teams' do
+  authorize_admin!
+  github_team = GithubTeam.find(params[:github_team][:id])
+  github_team.fetch_members(current_user.github_token)
+
+  flash[:notice] = "Members of '#{github_team.name}' added successfully!"
+  redirect '/nominations'
 end

@@ -2,24 +2,35 @@ class User < ActiveRecord::Base
   has_many :nominations, foreign_key: :nominator_id
   has_many :awards, foreign_key: :nominee_id, class_name: 'Nomination'
   has_many :votes
+  belongs_to :github_team
 
   validates :uid, presence: true
   validates :uid, uniqueness: { scope: :provider }
-
   validates :provider, presence: true
-  validates :email, presence: true
-  validates :name, presence: true
+  validates :provider, inclusion: { in: ['github'] }
   validates :pic_url, presence: true
+  validates :role, inclusion: { in: ['user', 'admin'] }
+  validates :username, presence: true
 
   def self.from_omniauth(auth)
     user_attributes = {
-      uid: auth.uid,
-      provider: auth.provider,
       name: auth.info.name,
+      username: auth.info.nickname,
       email: auth.info.email,
-      pic_url: auth.info.image
+      pic_url: auth.info.image,
+      github_token: auth.credentials.token
     }
 
-    find_or_initialize_by(user_attributes)
+    user = find_or_initialize_by(uid: auth.uid, provider: auth.provider)
+    user.assign_attributes(user_attributes)
+    user
+  end
+
+  def is_admin?
+    role == 'admin'
+  end
+
+  def display_name
+    name || username
   end
 end
