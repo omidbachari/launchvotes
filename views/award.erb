@@ -2,12 +2,12 @@
   <div class="award">
 
     <div class="over">
-      <img class="ribbon" src="../assets/ribbon.png">
+      <img class="ribbon" src="../assets/pink_ribbon.png">
     </div>
 
     <div class="top votes">
-      <form action="/nomination/<%= award.id %>" method="post">
-        <input type="submit" value="vote" class="votes">
+      <form action="/nominations/<%= award.id %>/vote" method="post">
+        <input type="submit" value="Vote" class="votes">
       </form>
     </div>
 
