@@ -2,7 +2,7 @@
 development:
   adapter: postgresql
   encoding: unicode
-  database: <YOUR_APP_NAME>_development
+  database: launchvotes_development
   pool: 5
   username:
   password:
@@ -11,7 +11,7 @@ development:
 test:
   adapter: postgresql
   encoding: unicode
-  database: <YOUR_APP_NAME>_test
+  database: launchvotes_test
   pool: 5
   username:
   password:
