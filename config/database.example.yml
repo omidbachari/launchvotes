@@ -18,6 +18,4 @@ test:
 
 # Configure the database used when in the production environment
 production:
-  adapter: postgresql
-  encoding: unicode
   url: <%= ENV['DATABASE_URL'] %>
