@@ -1,15 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
   <title>LaunchVotes</title>
   <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="/css/main.css">
   <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,100' rel='stylesheet' type='text/css'>
 </head>
 <body>
+
   <%= erb :header %>
+
   <%= erb :flash %>
-  <%= yield %>
+
+  <div class="container-fluid">
+    <%= yield %>
+  </div>
+
   <%= erb :footer %>
+
 </body>
 </html>
