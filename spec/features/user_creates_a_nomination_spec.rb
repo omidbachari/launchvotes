@@ -31,4 +31,16 @@ feature 'user creates a nomination', %q{
     expect(page).to have_content('Self nomination detected! Submission rejected.')
   end
 
+  scenario 'duplicate nominations are rejected' do
+  pending 'implement uniqueness constraint on nomination content'
+    nomination = FactoryGirl.build(:nomination)
+
+    login_as user
+
+    select nomination.nominee.name, from: 'Nominee'
+    fill_in 'Content', with: nomination.content
+    click_on 'Submit'
+
+    expect(page).to have_content('Duplicate nomination detected! Submission rejected.')
+  end
 end

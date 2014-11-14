@@ -20,4 +20,18 @@ RSpec.describe Nomination, model: true do
       expect(Nomination.this_week).to_not include(old_nomination)
     end
   end
+
+  describe '#votes_count' do
+    let!(:nomination) { FactoryGirl.create(:nomination) }
+
+    it "should be zero, initially" do
+      expect(nomination.votes_count).to eq(0)
+    end
+
+    it "should equal the number of votes" do
+      FactoryGirl.create_list(:vote, 3, nomination: nomination)
+      nomination.reload
+      expect(nomination.votes_count).to eq(3)
+    end
+  end
 end

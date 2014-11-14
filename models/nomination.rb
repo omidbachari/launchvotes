@@ -4,6 +4,9 @@ class Nomination < ActiveRecord::Base
   has_many :votes
 
   validates :content, presence: true
+  # validates :content, uniqueness: { scope: :nominee,
+  #   message: "Duplicate nomination detected! Submission rejected."}
+
   validates :nominee, presence: true
   validates :nominator, presence: true
   validate :nominee_cannot_be_nominator
