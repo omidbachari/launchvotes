@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
 
   def self.from_omniauth(auth)
     user_attributes = {
-      name: auth.info.name,
+      #name: auth.info.name,
       username: auth.info.nickname,
       email: auth.info.email,
       pic_url: auth.info.image,
