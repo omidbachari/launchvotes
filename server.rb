@@ -117,6 +117,7 @@ end
 
 get '/teams' do
   authorize_admin!
+  GithubTeam.fetch_teams(current_user.github_token)
   @github_teams = GithubTeam.all
   erb :teams
 end
