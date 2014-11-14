@@ -6,7 +6,6 @@ class GithubTeam < ActiveRecord::Base
 
   def self.fetch_teams(token)
     client = Octokit::Client.new(access_token: token)
-    binding.pry
     teams = client.user_teams
     teams.each do |team|
       find_or_create_by(tid: team.id, name: team.name)
