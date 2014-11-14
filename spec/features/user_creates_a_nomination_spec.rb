@@ -32,8 +32,7 @@ feature 'user creates a nomination', %q{
   end
 
   scenario 'duplicate nominations are rejected' do
-  pending 'implement uniqueness constraint on nomination content'
-    nomination = FactoryGirl.build(:nomination)
+    nomination = FactoryGirl.create(:nomination)
 
     login_as user
 

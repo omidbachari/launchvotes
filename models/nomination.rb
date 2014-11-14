@@ -4,8 +4,8 @@ class Nomination < ActiveRecord::Base
   has_many :votes
 
   validates :content, presence: true
-  # validates :content, uniqueness: { scope: :nominee,
-  #   message: "Duplicate nomination detected! Submission rejected."}
+  validates :content, uniqueness: { scope: :nominee,
+    message: "Duplicate nomination detected! Submission rejected."}
 
   validates :nominee, presence: true
   validates :nominator, presence: true
@@ -43,9 +43,5 @@ class Nomination < ActiveRecord::Base
     week_start = day.beginning_of_week
     week_end = day.end_of_week
     where(created_at: week_start..week_end)
-  end
-
-  def score
-    votes.count
   end
 end
