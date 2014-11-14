@@ -41,4 +41,8 @@ class Nomination < ActiveRecord::Base
     week_end = day.end_of_week
     where(created_at: week_start..week_end)
   end
+
+  def score
+    votes.count
+  end
 end

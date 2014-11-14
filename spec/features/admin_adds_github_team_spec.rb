@@ -12,6 +12,7 @@ feature 'admin adds a github team', %q{
   let!(:github_team) { FactoryGirl.create(:github_team) }
 
   scenario 'admin adds a github team' do
+    pending 'adding via seeds file, for now'
     login_as admin
 
     visit '/teams'
