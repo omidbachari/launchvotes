@@ -28,7 +28,7 @@ feature 'user creates a nomination', %q{
     fill_in 'Content', with: 'Best Hairdo'
     click_on 'Submit'
 
-    expect(page).to have_content('Self nomination detected! Submission rejected.')
+    expect(page).to have_content('Egotistical nomination detected! Submission rejected.')
   end
 
   scenario 'duplicate nominations are rejected' do

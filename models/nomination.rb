@@ -13,7 +13,7 @@ class Nomination < ActiveRecord::Base
 
   def nominee_cannot_be_nominator
     if nominee == nominator
-      errors.add(:nominee, 'Self nomination detected! Submission rejected.')
+      errors.add(:nominee, 'Egotistical nomination detected! Submission rejected.')
     end
   end
 
