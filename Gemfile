@@ -11,6 +11,7 @@ gem 'sinatra'
 gem 'sinatra-activerecord'
 gem 'sinatra-contrib'
 gem 'sinatra-flash'
+gem 'sanitize'
 
 group :development, :test do
   gem 'capybara'

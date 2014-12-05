@@ -42,4 +42,20 @@ feature 'user creates a nomination', %q{
 
     expect(page).to have_content('Duplicate nomination detected! Submission rejected.')
   end
+
+  scenario 'injecting tags into the page is not allowed' do
+    nomination = FactoryGirl.build(:nomination)
+    login_as user
+
+    malicious_code = "<script>window.open('http://heyyeyaaeyaaaeyaeyaa.com/')</script>"
+
+    select nomination.nominee.name, from: 'Nominee'
+    fill_in 'Content', with: malicious_code
+    click_on 'Submit'
+
+    save_and_open_page
+
+    expect(page).to_not have_content(malicious_code)
+
+  end
 end

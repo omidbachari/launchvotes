@@ -7,6 +7,7 @@ require 'sinatra'
 require 'sinatra/activerecord'
 require 'sinatra/reloader'
 require 'sinatra/flash'
+require 'sanitize'
 
 Dir[File.join(File.dirname(__FILE__), 'models', '**', '*.rb')].each do |file|
   require file
@@ -90,11 +91,12 @@ end
 post '/nominations' do
   authorize!
   nominee = User.find(params[:nomination][:nominee_id])
+  content = Sanitize.fragment(params[:nomination][:content], Sanitize::Config::RESTRICTED)
 
   nomination = Nomination.new(
     nominee: nominee,
     nominator: current_user,
-    content: params[:nomination][:content]
+    content: content
   )
 
   if nomination.save
