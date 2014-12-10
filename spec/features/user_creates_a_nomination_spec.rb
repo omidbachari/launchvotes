@@ -31,7 +31,7 @@ feature 'user creates a nomination', %q{
     expect(page).to have_content('Egotistical nomination detected! Submission rejected.')
   end
 
-  scenario 'duplicate nominations are rejected' do
+  scenario 'duplicate nominations for the same nominee are rejected' do
     nomination = FactoryGirl.create(:nomination)
 
     login_as user
@@ -41,6 +41,19 @@ feature 'user creates a nomination', %q{
     click_on 'Submit'
 
     expect(page).to have_content('Duplicate nomination detected! Submission rejected.')
+  end
+
+  scenario 'duplicate nominations by the same user are rejected' do
+    nomination_one = FactoryGirl.create(:nomination, nominator: user)
+    nomination_two = FactoryGirl.build(:nomination)
+
+    login_as user
+
+    select nomination_two.nominee.name, from: 'Nominee'
+    fill_in 'Content', with: nomination_one.content
+    click_on 'Submit'
+
+    expect(page).to have_content('You have already nominated someone for this award!')
   end
 
   scenario 'injecting tags into the page is not allowed' do

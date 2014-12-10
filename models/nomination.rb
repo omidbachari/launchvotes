@@ -6,6 +6,8 @@ class Nomination < ActiveRecord::Base
   validates :content, presence: true
   validates :content, uniqueness: { scope: :nominee,
     message: "Duplicate nomination detected! Submission rejected."}
+  validates :content, uniqueness: { scope: :nominator,
+    message: "You have already nominated someone for this award!" }
 
   validates :nominee, presence: true
   validates :nominator, presence: true
