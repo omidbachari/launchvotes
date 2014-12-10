@@ -1,0 +1,25 @@
+<div class="col-md-3">
+  <div class="award">
+
+    <div class="over">
+      <img class="ribbon" src="../assets/ribbon.png">
+    </div>
+
+    <div class="top votes">
+      <form action="/nomination/<%= award.id %>" method="post">
+        <input type="submit" value="vote" class="votes">
+      </form>
+    </div>
+
+    <div class="under">
+      <img class="prof-pic" src="<%= award.nominee.pic_url %>">
+    </div>
+
+    <div>
+      <h2 class="launcher-name"><%= award.nominee.name %></h2>
+    </div>
+
+    <h2 class="award-title"><%= award.content %></h2>
+
+  </div>
+</div>

@@ -1,2 +1,3 @@
 /.env
 /config/database.yml
+/capybara-*.html
