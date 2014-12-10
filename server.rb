@@ -27,7 +27,7 @@ configure do
   end
 end
 
-#------------------------------------------ Authorization ------------------------------------------
+#--- Authorization ---
 
 def authorize!
   unless signed_in?
@@ -53,7 +53,7 @@ helpers do
   end
 end
 
-#------------------------------------------ Routes ------------------------------------------
+#--- Routes ---
 
 get '/auth/:provider/callback' do
   user = User.from_omniauth(env['omniauth.auth'])

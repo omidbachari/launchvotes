@@ -53,9 +53,6 @@ feature 'user creates a nomination', %q{
     fill_in 'Content', with: malicious_code
     click_on 'Submit'
 
-    save_and_open_page
-
     expect(page).to_not have_content(malicious_code)
-
   end
 end
