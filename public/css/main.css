@@ -1,4 +1,4 @@
-html, body {
+/*html, body {
   width: auto !important;
   overflow-x: hidden !important;
 }
@@ -163,24 +163,44 @@ a:hover {
   margin-top: 50px;
   color:white;
 }
-.login-button {
-    position: relative;
-    vertical-align: top;
-    width: 50%;
-    height: 50px;
-    padding: 0;
-    font-size: 22px;
-    color: white;
-    text-align: center;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
-    background: #ed197b;
-    border: 0;
-    border-bottom: 2px solid #d60c67;
-    cursor: pointer;
-    -webkit-box-shadow: inset 0 -2px #d60c67;
-    box-shadow: inset 0 -1px #d60c67;
-    margin-bottom: 10px;
-    margin-top: 10px;
+
+.login-button, .login-link {
+  position: relative;
+  vertical-align: top;
+  width: 50%;
+  height: 50px;
+  padding: 10px 30px 10px 30px;
+  font-size: 22px;
+  color: white;
+  text-align: center;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  background: #ed197b;
+  border: 0;
+  border-bottom: 2px solid #d60c67;
+  cursor: pointer;
+  -webkit-box-shadow: inset 0 -2px #d60c67;
+  box-shadow: inset 0 -1px #d60c67;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.mobile-login-link {
+  position: relative;
+  vertical-align: top;
+  width: 50%;
+  height: 50px;
+  padding: 10px 50px 10px 50px;
+  font-size: 22px;
+  color: white;
+  text-align: center;
+  background: white;
+  border: 0;
+  border-bottom: 2px solid #d60c67;
+  cursor: pointer;
+  -webkit-box-shadow: inset 0 -2px #d60c67;
+  box-shadow: inset 0 -1px #d60c67;
+  margin-bottom: 10px;
+  margin-top: 10px;
 }
 
 /*------------------ Form -------------------*/
@@ -373,3 +393,4 @@ form input.form-control {
     background-repeat: no-repeat;
   }
 }
+*/

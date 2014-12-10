@@ -12,7 +12,7 @@
           <select class="roboto-sm form-control" id="nomination_nominee_id" name="nomination[nominee_id]">
             <option default>Choose Launcher</option>
             <% @users.each do |user| %>
-              <option value="<%= user.id %>"><%= user.name %></option>
+              <option value="<%= user.id %>"><%= user.display_name %></option>
             <% end %>
           </select>
         </div>

@@ -15,7 +15,7 @@ feature 'user votes on a nomination', %q{
     login_as user
 
     visit '/nominations'
-    click_on 'Vote'
+    find('input.votes').click
     expect(page).to have_content("You have voted!")
   end
 
@@ -23,8 +23,8 @@ feature 'user votes on a nomination', %q{
     login_as user
 
     visit '/nominations'
-    click_on 'Vote'
-    click_on 'Vote'
+    find('input.votes').click
+    find('input.votes').click
     expect(page).to have_content("You have already voted on this nomination!")
   end
 

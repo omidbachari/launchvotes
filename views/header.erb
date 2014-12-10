@@ -1,15 +1,16 @@
 <header>
-  <div class="row">
-    <div class="col-md-4 nav">
-      <h1><img class="logo" src="/assets/logo.png"><a href="">LaunchVotes</a></h1>
-    </div>
-    <% if signed_in? %>
-      <div class="col-md-2 nav col-md-offset-6 visible-lg" id="nav-profile">
-        <div>
-          <a class="nav-signout" href="/sign_out">Sign out</a>
-          <img class="tiny-img" src="<%= current_user.pic_url %>">
-        </div>
-      </div>
-    <% end %>
+
+  <div class="col-md-4 nav">
+    <h1><img class="logo" src="/assets/logo.png" alt=""><a href="">LaunchVotes</a></h1>
   </div>
+
+  <% if signed_in? %>
+    <div class="col-md-2 nav col-md-offset-6 visible-lg" id="nav-profile">
+      <div>
+        <a class="nav-signout" href="/sign_out">Sign out</a>
+        <img class="tiny-img" src="<%= current_user.pic_url %>" alt="">
+      </div>
+    </div>
+  <% end %>
+
 </header>

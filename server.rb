@@ -1,11 +1,13 @@
 require 'dotenv'
 Dotenv.load
 
+require 'octokit'
+require 'omniauth-github'
 require 'sinatra'
 require 'sinatra/activerecord'
 require 'sinatra/reloader'
 require 'sinatra/flash'
-require 'omniauth-github'
+require 'sanitize'
 
 Dir[File.join(File.dirname(__FILE__), 'models', '**', '*.rb')].each do |file|
   require file
@@ -25,11 +27,18 @@ configure do
   end
 end
 
-#------------------------------------------ Authorization ------------------------------------------
+#--- Authorization ---
 
 def authorize!
   unless signed_in?
     flash[:notice] = "You need to sign in first."
+    redirect '/'
+  end
+end
+
+def authorize_admin!
+  if !signed_in? || !current_user.is_admin?
+    flash[:notice] = "You are not authorized to view this resource!"
     redirect '/'
   end
 end
@@ -44,14 +53,13 @@ helpers do
   end
 end
 
-#------------------------------------------ Routes ------------------------------------------
+#--- Routes ---
 
 get '/auth/:provider/callback' do
   user = User.from_omniauth(env['omniauth.auth'])
-
   if user.save
     session['user_id'] = user.id
-    flash[:notice] = "You have signed in as #{user.name}"
+    flash[:notice] = "You have signed in as #{user.display_name}"
     redirect '/nominations'
   else
     flash[:error] = "There was a problem signing in."
@@ -72,19 +80,23 @@ end
 
 get '/nominations' do
   authorize!
-  @users = User.all
-  @nominations = Nomination.this_week.includes(:nominee).where.not(nominee: current_user)
+  @users = User.order(:name)
+  @nominations = Nomination.this_week
+    .includes(:nominee)
+    .where.not(nominee: current_user)
+    .order(votes_count: :desc)
   erb :nominations
 end
 
 post '/nominations' do
   authorize!
   nominee = User.find(params[:nomination][:nominee_id])
+  content = Sanitize.fragment(params[:nomination][:content], Sanitize::Config::RESTRICTED)
 
   nomination = Nomination.new(
     nominee: nominee,
     nominator: current_user,
-    content: params[:nomination][:content]
+    content: content
   )
 
   if nomination.save
@@ -106,4 +118,20 @@ post '/nominations/:id/vote' do
     flash[:error] = vote.errors.full_messages.join
   end
   redirect "/nominations"
+end
+
+get '/teams' do
+  authorize_admin!
+  GithubTeam.fetch_teams(current_user.github_token)
+  @github_teams = GithubTeam.all
+  erb :teams
+end
+
+post '/teams' do
+  authorize_admin!
+  github_team = GithubTeam.find(params[:github_team][:id])
+  github_team.fetch_members(current_user.github_token)
+
+  flash[:notice] = "Members of '#{github_team.name}' added successfully!"
+  redirect '/nominations'
 end

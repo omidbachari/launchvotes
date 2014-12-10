@@ -4,13 +4,18 @@ class Nomination < ActiveRecord::Base
   has_many :votes
 
   validates :content, presence: true
+  validates :content, uniqueness: { scope: :nominee,
+    message: "Duplicate nomination detected! Submission rejected."}
+  validates :content, uniqueness: { scope: :nominator,
+    message: "You have already nominated someone for this award!" }
+
   validates :nominee, presence: true
   validates :nominator, presence: true
   validate :nominee_cannot_be_nominator
 
   def nominee_cannot_be_nominator
     if nominee == nominator
-      errors.add(:nominee, 'Self nomination detected! Submission rejected.')
+      errors.add(:nominee, 'Egotistical nomination detected! Submission rejected.')
     end
   end
 

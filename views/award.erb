@@ -2,21 +2,21 @@
   <div class="award">
 
     <div class="over">
-      <img class="ribbon" src="../assets/pink_ribbon.png">
+      <img class="ribbon" src="../assets/pink_ribbon.png" alt="">
     </div>
 
     <div class="top votes">
       <form action="/nominations/<%= award.id %>/vote" method="post">
-        <input type="submit" value="Vote" class="votes">
+        <input type="submit" value="<%= award.votes_count %>" class="votes">
       </form>
     </div>
 
     <div class="under">
-      <img class="prof-pic" src="<%= award.nominee.pic_url %>">
+      <img class="prof-pic" src="<%= award.nominee.pic_url %>" alt="">
     </div>
 
     <div>
-      <h2 class="launcher-name"><%= award.nominee.name %></h2>
+      <h2 class="launcher-name"><%= award.nominee.display_name %></h2>
     </div>
 
     <h2 class="award-title"><%= award.content %></h2>

@@ -2,7 +2,7 @@
 development:
   adapter: postgresql
   encoding: unicode
-  database: <YOUR_APP_NAME>_development
+  database: launchvotes_development
   pool: 5
   username:
   password:
@@ -11,11 +11,15 @@ development:
 test:
   adapter: postgresql
   encoding: unicode
-  database: <YOUR_APP_NAME>_test
+  database: launchvotes_test
   pool: 5
   username:
   password:
 
 # Configure the database used when in the production environment
 production:
-  url: <%= ENV['DATABASE_URL'] %>
+  adapter: postgresql
+  encoding: unicode
+  database: launchvotes_production
+  username:
+  password:
