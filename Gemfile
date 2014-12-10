@@ -1,20 +1,21 @@
-# source 'https://rubygems.org'
-
-# ruby '2.0.0'
-
-# gem 'sinatra'
-# gem 'pg'
-
 source 'https://rubygems.org'
 
+ruby '2.0.0'
+
+gem 'dotenv'
+gem 'omniauth-github'
+gem 'rake'
+gem 'pg'
 gem 'sinatra'
+gem 'sinatra-activerecord'
 gem 'sinatra-contrib'
 gem 'sinatra-flash'
-gem 'omniauth-github'
-gem 'omniauth-facebook'
-gem 'pg'
-gem 'dotenv'
 
 group :development, :test do
-  gem 'dotenv'
+  gem 'database_cleaner'
+  gem 'factory_girl'
+  gem 'pry'
+  gem 'rspec'
+  gem 'shoulda-matchers'
+  gem 'valid_attribute'
 end

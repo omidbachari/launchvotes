@@ -1,16 +1,16 @@
-# dotenv loads variables from a .env file into ENV when the environment is bootstrapped.
 require 'dotenv'
 Dotenv.load
 
 require 'sinatra'
+require 'sinatra/activerecord'
 require 'sinatra/reloader'
 require 'sinatra/flash'
 require 'omniauth-github'
-require 'omniauth-facebook'
 require 'pg'
 
-require_relative 'models/user'
-
+Dir[File.join(File.dirname(__FILE__), 'app', '**', '*.rb')].each do |file|
+  require file
+end
 
 configure :development do
   require 'pry'
@@ -39,7 +39,7 @@ def production_database_config
 end
 
 configure :development do
-  set :database_config, { dbname: 'launchvotes' }
+  set :database_config, { dbname: ENV['DATABASE_NAME'] }
 end
 
 configure :production do
