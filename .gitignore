@@ -1,3 +1,4 @@
 /.env
 /config/database.yml
 /capybara-*.html
+/api_examples.md
