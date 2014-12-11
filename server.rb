@@ -91,8 +91,6 @@ get '/nominations' do
 end
 
 get '/nominations/:weeks/weeks_ago' do |weeks|
-  @users = User.order(:name)
-
   @nominations = Nomination.weeks_ago(weeks.to_i)
     .includes(:nominee)
     .order(votes_count: :desc)
