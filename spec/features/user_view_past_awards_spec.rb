@@ -6,6 +6,10 @@ feature 'user views past awards', %q{
   I want to see last week's awards
   So that I can see the history of LaunchVotes.
 
+  Acceptance Criteria:
+  [ ] An unauthenticated user can view past awards
+  [ ] A link to past awards should exist on the root page
+
 } do
 
   let(:user) { FactoryGirl.create(:user) }
