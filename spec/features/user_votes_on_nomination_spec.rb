@@ -33,7 +33,7 @@ feature 'user votes on a nomination', %q{
     nomination = FactoryGirl.create(:nomination, created_at: 1.week.ago)
     login_as user
 
-    visit '/nominations?weeks_ago=1'
+    visit '/nominations/1/weeks_ago'
     #expect(page).to_not have_button(nomination.votes_count)
     expect(page).to_not have_css('input.votes')
   end

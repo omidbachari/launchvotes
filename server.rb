@@ -80,19 +80,23 @@ end
 
 get '/nominations' do
   authorize!
+
+  @users = User.order(:name)
+  @nominations = Nomination.this_week
+    .includes(:nominee)
+    .where.not(nominee: current_user)
+    .order(votes_count: :desc)
+
+  erb :nominations
+end
+
+get '/nominations/:weeks/weeks_ago' do |weeks|
+  authorize!
   @users = User.order(:name)
 
-  if params[:weeks_ago]
-    @nominations = Nomination.weeks_ago(params[:weeks_ago].to_i)
-      .includes(:nominee)
-      .order(votes_count: :desc)
-  else
-    @nominations = Nomination.this_week
-      .includes(:nominee)
-      .where.not(nominee: current_user)
-      .order(votes_count: :desc)
-  end
-
+  @nominations = Nomination.weeks_ago(weeks.to_i)
+    .includes(:nominee)
+    .order(votes_count: :desc)
   erb :nominations
 end
 
