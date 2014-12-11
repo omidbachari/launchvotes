@@ -81,10 +81,18 @@ end
 get '/nominations' do
   authorize!
   @users = User.order(:name)
-  @nominations = Nomination.this_week
-    .includes(:nominee)
-    .where.not(nominee: current_user)
-    .order(votes_count: :desc)
+
+  if params[:weeks_ago]
+    @nominations = Nomination.weeks_ago(params[:weeks_ago].to_i)
+      .includes(:nominee)
+      .order(votes_count: :desc)
+  else
+    @nominations = Nomination.this_week
+      .includes(:nominee)
+      .where.not(nominee: current_user)
+      .order(votes_count: :desc)
+  end
+
   erb :nominations
 end
 

@@ -9,9 +9,9 @@ feature 'user votes on a nomination', %q{
 } do
 
   let(:user) { FactoryGirl.create(:user) }
-  let!(:nomination) { FactoryGirl.create(:nomination) }
 
   scenario 'authenticated user votes on a nomination' do
+    nomination = FactoryGirl.create(:nomination)
     login_as user
 
     visit '/nominations'
@@ -20,12 +20,22 @@ feature 'user votes on a nomination', %q{
   end
 
   scenario 'user cannot vote twice for the same nomination' do
+    nomination = FactoryGirl.create(:nomination)
     login_as user
 
     visit '/nominations'
     find('input.votes').click
     find('input.votes').click
     expect(page).to have_content("You have already voted on this nomination!")
+  end
+
+  scenario 'user cannot vote on old nominations', focus: true do
+    nomination = FactoryGirl.create(:nomination, created_at: 1.week.ago)
+    login_as user
+
+    visit '/nominations?weeks_ago=1'
+    #expect(page).to_not have_button(nomination.votes_count)
+    expect(page).to_not have_css('input.votes')
   end
 
 end

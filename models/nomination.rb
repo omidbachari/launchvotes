@@ -19,6 +19,12 @@ class Nomination < ActiveRecord::Base
     end
   end
 
+  def votable?
+    week_start = Date.today.beginning_of_week
+    week_end = Date.today.end_of_week
+    week_start < created_at && created_at < week_end
+  end
+
   def self.examples
     [
       "Most glorious beard",

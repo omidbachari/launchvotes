@@ -6,9 +6,13 @@
     </div>
 
     <div class="top votes">
-      <form action="/nominations/<%= award.id %>/vote" method="post">
-        <input type="submit" value="<%= award.votes_count %>" class="votes">
-      </form>
+      <% if award.votable? %>
+        <form action="/nominations/<%= award.id %>/vote" method="post">
+          <input type="submit" value="<%= award.votes_count %>" class="votes">
+        </form>
+      <% else %>
+        <div class="votes"><%= award.votes_count %></div>
+      <% end %>
     </div>
 
     <div class="under">
