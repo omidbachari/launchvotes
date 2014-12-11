@@ -10,7 +10,7 @@ feature 'user views past awards', %q{
 
   let(:user) { FactoryGirl.create(:user) }
 
-  scenario 'view past awards', focus: true do
+  scenario 'view past awards' do
     nomination = FactoryGirl.create(:nomination, created_at: 1.week.ago)
     login_as user
     click_on 'Time Travel'

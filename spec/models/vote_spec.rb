@@ -13,4 +13,12 @@ RSpec.describe Vote, model: true do
 
     expect { second_vote.save! }.to raise_error(ActiveRecord::RecordInvalid)
   end
+
+  it 'should not allow voting on expired nominations' do
+    nomination = FactoryGirl.create(:nomination, created_at: 1.week.ago)
+    vote = FactoryGirl.build(:vote, nomination: nomination)
+    vote.save
+
+    expect(vote.errors[:nomination]).to include("Voting on this nomination has expired.")
+  end
 end

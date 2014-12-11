@@ -29,7 +29,7 @@ feature 'user votes on a nomination', %q{
     expect(page).to have_content("You have already voted on this nomination!")
   end
 
-  scenario 'user cannot vote on old nominations', focus: true do
+  scenario 'user cannot vote on old nominations' do
     nomination = FactoryGirl.create(:nomination, created_at: 1.week.ago)
     login_as user
 
