@@ -7,17 +7,15 @@ feature 'user views past awards', %q{
   So that I can see the history of LaunchVotes.
 
   Acceptance Criteria:
-  [ ] An unauthenticated user can view past awards
-  [ ] A link to past awards should exist on the root page
+  [x] An unauthenticated user can view past awards
+  [x] A link to past awards should exist on the root page
 
 } do
 
-  let(:user) { FactoryGirl.create(:user) }
-
   scenario 'view past awards' do
     nomination = FactoryGirl.create(:nomination, created_at: 1.week.ago)
-    login_as user
-    click_on 'Time Travel'
+    visit '/'
+    click_on "View Past Awards"
     expect(page).to have_content(nomination.content)
   end
 

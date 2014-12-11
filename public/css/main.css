@@ -164,7 +164,9 @@ a:hover {
   color:white;
 }
 
-.login-button, .login-link {
+.login-button,
+.login-link,
+.past-awards-link {
   position: relative;
   vertical-align: top;
   width: 50%;

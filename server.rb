@@ -91,13 +91,12 @@ get '/nominations' do
 end
 
 get '/nominations/:weeks/weeks_ago' do |weeks|
-  authorize!
   @users = User.order(:name)
 
   @nominations = Nomination.weeks_ago(weeks.to_i)
     .includes(:nominee)
     .order(votes_count: :desc)
-  erb :nominations
+  erb :awards
 end
 
 post '/nominations' do
