@@ -4,7 +4,9 @@
     <div class="col-md-12"><h1 class="title center">Awards</h1></div>
     <div class="row nomination-line">
       <% if @nominations.empty? %>
-        <div class="col-md-8 col-md-offset-4"><h1 class="make-nom">There were no awards this week</h1></div>
+        <div class="center">
+          <h1 class="make-nom">There were no awards this week</h1>
+        </div>
       <% else %>
         <% @nominations.each do |award| %>
           <%= erb :award, locals: { award: award } %>
