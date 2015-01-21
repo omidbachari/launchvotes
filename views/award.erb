@@ -6,7 +6,14 @@
     </div>
 
     <div class="top votes">
-      <% if award.votable? %>
+
+      <% if current_user && current_user.is_admin? && award.votable? %>
+        <form action="/nominations/<%= award.id %>/vote" method="post">
+          <input type="submit" value="<%= award.votes_count %>" class="votes">
+        </form>
+      <% elsif current_user && current_user.is_admin? %>
+        <div class="votes"><%= award.votes_count %></div>
+      <% elsif award.votable? %>
         <form action="/nominations/<%= award.id %>/vote" method="post">
           <input type="submit" value="Vote!" class="votes">
         </form>
