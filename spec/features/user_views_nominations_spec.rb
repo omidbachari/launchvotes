@@ -9,6 +9,7 @@ feature 'user views a list of nominations', %q{
 } do
 
   let(:user) { FactoryGirl.create(:user) }
+  let(:admin) { FactoryGirl.create(:user, role: 'admin') }
 
   scenario 'authenticated user views nominations' do
     nominations = []
@@ -37,16 +38,16 @@ feature 'user views a list of nominations', %q{
     expect(page).to_not have_content(nomination.content)
   end
 
-  scenario 'nominations with the most votes rise to the top' do
+  scenario 'admin views awards in ascending order of votes' do
     first_nomination = FactoryGirl.create(:nomination)
     second_nomination = FactoryGirl.create(:nomination)
     3.times { FactoryGirl.create(:vote, nomination: first_nomination) }
 
-    login_as user
-    visit '/nominations'
+    login_as admin
+    visit '/awards'
 
     expect(page.body.index(first_nomination.content))
-      .to be < (page.body.index(second_nomination.content))
+      .to be > (page.body.index(second_nomination.content))
   end
 
 end

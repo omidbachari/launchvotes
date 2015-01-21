@@ -83,7 +83,7 @@ get '/awards' do
 
   @nominations = Nomination.this_week
     .includes(:nominee)
-    .order(content: :asc)
+    .order(votes_count: :asc)
 
   erb :awards
 end
