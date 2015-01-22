@@ -1,6 +1,6 @@
-require "spec_helper"
+require 'spec_helper'
 
-feature "user views a list of nominations", %q{
+feature 'user views a list of nominations', %q{
 
   As a Launcher
   I want to see what my fellow Launchers have been nominated for
@@ -9,14 +9,14 @@ feature "user views a list of nominations", %q{
 } do
 
   let(:user) { FactoryGirl.create(:user) }
-  let(:admin) { FactoryGirl.create(:user, role: "admin") }
+  let(:admin) { FactoryGirl.create(:user, role: 'admin') }
 
-  scenario "authenticated user views nominations" do
+  scenario 'authenticated user views nominations' do
     nominations = []
     10.times { nominations << FactoryGirl.create(:nomination) }
 
     login_as user
-    visit "/nominations"
+    visit '/nominations'
 
     nominations.each do |nomination|
       expect(page).to have_content(nomination.nominee.name)
@@ -24,28 +24,28 @@ feature "user views a list of nominations", %q{
     end
   end
 
-  scenario "un-authenticated users are not authorized" do
-    visit "/nominations"
-    expect(page).to have_content("You need to sign in first.")
+  scenario 'un-authenticated users are not authorized' do
+    visit '/nominations'
+    expect(page).to have_content('You need to sign in first.')
   end
 
-  scenario "nominees cannot see their awards" do
+  scenario 'nominees cannot see their awards' do
     nomination = FactoryGirl.create(:nomination, nominee: user)
 
     login_as user
-    visit "/nominations"
+    visit '/nominations'
 
     expect(page).to_not have_content(nomination.content)
   end
 
-  xscenario "admin views awards in ascending order of votes" do
-    pending "nondeterministic"
+  xscenario 'admin views awards in ascending order of votes' do
+    pending 'nondeterministic'
     first_nomination = FactoryGirl.create(:nomination)
     second_nomination = FactoryGirl.create(:nomination)
     3.times { FactoryGirl.create(:vote, nomination: first_nomination) }
 
     login_as admin
-    visit "/awards"
+    visit '/awards'
 
     expect(page.body.index(first_nomination.content))
       .to be > (page.body.index(second_nomination.content))
