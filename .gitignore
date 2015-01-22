@@ -4,3 +4,4 @@
 /api_examples.md
 /.ruby-version
 /db/dumps/*
+/coverage
