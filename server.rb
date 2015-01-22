@@ -13,8 +13,15 @@ Dir[File.join(File.dirname(__FILE__), 'models', '**', '*.rb')].each do |file|
   require file
 end
 
+set :host, ENV["HOSTNAME"]
+
 configure :development do
   require 'pry'
+  set :force_ssl, false
+end
+
+configure :production do
+  set :force_ssl, true
 end
 
 
