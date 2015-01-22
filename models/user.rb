@@ -5,12 +5,14 @@ class User < ActiveRecord::Base
   belongs_to :github_team
 
   validates :uid, presence: true
-  validates :uid, uniqueness: { scope: :provider }
   validates :provider, presence: true
-  validates :provider, inclusion: { in: ['github'] }
   validates :pic_url, presence: true
-  validates :role, inclusion: { in: ['user', 'admin'] }
   validates :username, presence: true
+
+  validates :provider, inclusion: { in: ['github'] }
+  validates :role, inclusion: { in: ['user', 'admin'] }
+
+  validates :uid, uniqueness: { scope: :provider }
 
   def self.from_omniauth(auth)
     user_attributes = {

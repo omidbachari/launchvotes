@@ -85,14 +85,34 @@ get '/' do
   erb :index
 end
 
+get '/awards' do
+  authorize_admin!
+
+  @nominations = Nomination.this_week
+    .includes(:nominee)
+    .order(votes_count: :asc)
+
+  erb :awards
+end
+
 get '/nominations' do
   authorize!
+
   @users = User.order(:name)
   @nominations = Nomination.this_week
     .includes(:nominee)
     .where.not(nominee: current_user)
-    .order(votes_count: :desc)
+    .order(content: :asc)
+
   erb :nominations
+end
+
+get '/nominations/:weeks/weeks_ago' do |weeks|
+  @nominations = Nomination.weeks_ago(weeks.to_i)
+    .includes(:nominee)
+    .order(votes_count: :desc)
+
+  erb :awards
 end
 
 post '/nominations' do

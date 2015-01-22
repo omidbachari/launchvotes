@@ -6,4 +6,12 @@ class Vote < ActiveRecord::Base
   validates :nomination, uniqueness:
     { scope: :user, message: 'You have already voted on this nomination!' }
   validates :user, presence: true
+
+  validate :nomination_is_votable
+
+  def nomination_is_votable
+    if nomination && !nomination.votable?
+      errors.add(:nomination, "Voting on this nomination has expired.")
+    end
+  end
 end

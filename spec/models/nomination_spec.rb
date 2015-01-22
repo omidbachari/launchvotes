@@ -18,7 +18,39 @@ RSpec.describe Nomination, model: true do
       FactoryGirl.create(:nomination,
         nominee: nomination.nominee,
         content: nomination.content)
-    }.to raise_error
+    }.to raise_error(ActiveRecord::RecordInvalid)
+  end
+
+  it 'should validate uniqueness of content scoped to nominator' do
+    nomination = FactoryGirl.create(:nomination)
+
+    expect {
+      FactoryGirl.create(:nomination,
+        nominator: nomination.nominator,
+        content: nomination.content)
+    }.to raise_error(ActiveRecord::RecordInvalid)
+  end
+
+  it 'should validate that nominee cannot be nominator' do
+    user = FactoryGirl.create(:user)
+
+    expect {
+      FactoryGirl.create(:nomination,
+        nominee: user,
+        nominator: user)
+    }.to raise_error(ActiveRecord::RecordInvalid)
+  end
+
+  describe "#votable?" do
+    it 'should return true for nominations made this week' do
+      nomination = FactoryGirl.create(:nomination)
+      expect(nomination.votable?).to be true
+    end
+
+    it 'should return false for nominations made last week' do
+      nomination = FactoryGirl.create(:nomination, created_at: 1.week.ago)
+      expect(nomination.votable?).to be false
+    end
   end
 
   describe '.this_week' do
