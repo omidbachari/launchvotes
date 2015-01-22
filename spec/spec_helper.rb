@@ -12,6 +12,8 @@ require 'valid_attribute'
 set :environment, :test
 set :database, :test
 
+ActiveRecord::Base.logger.level = 1
+
 FactoryGirl.definition_file_paths = ['./spec/factories']
 FactoryGirl.find_definitions
 
@@ -23,14 +25,19 @@ RSpec.configure do |config|
   config.run_all_when_everything_filtered = true
 
   config.before(:suite) do
-    DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.clean_with(:truncation)
   end
 
-  config.around(:each) do |example|
-    DatabaseCleaner.cleaning do
-      example.run
-    end
+  config.before(:each) do
+    DatabaseCleaner.strategy = :transaction
+  end
+
+  config.before(:each) do
+    DatabaseCleaner.start
+  end
+
+  config.after(:each) do
+    DatabaseCleaner.clean
   end
 end
 
