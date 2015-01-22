@@ -12,6 +12,8 @@ require 'valid_attribute'
 set :environment, :test
 set :database, :test
 
+ActiveRecord::Base.logger.level = 1
+
 FactoryGirl.definition_file_paths = ['./spec/factories']
 FactoryGirl.find_definitions
 
