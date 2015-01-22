@@ -23,3 +23,7 @@ group :development, :test do
   gem 'shoulda-matchers'
   gem 'valid_attribute'
 end
+
+group :test do
+  gem 'coveralls', require: false
+end

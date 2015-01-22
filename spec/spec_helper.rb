@@ -1,3 +1,6 @@
+require 'coveralls'
+Coveralls.wear!
+
 require_relative '../server.rb'
 
 require 'capybara/rspec'
