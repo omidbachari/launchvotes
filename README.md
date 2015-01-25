@@ -1,6 +1,6 @@
 # LaunchVotes
 
-[![Build Status](https://travis-ci.org/omidbachari/launchvotes.svg?branch=master)](https://travis-ci.org/omidbachari/launchvotes) [![Code Climate](https://codeclimate.com/github/omidbachari/launchvotes.png)](https://codeclimate.com/github/omidbachari/launchvotes) [![Coverage Status](https://coveralls.io/repos/omidbachari/launchvotes/badge.png)](https://coveralls.io/r/omidbachari/launchvotes)
+[![Build Status](https://travis-ci.org/omidbachari/launchvotes.svg?branch=master)](https://travis-ci.org/omidbachari/launchvotes) [![Code Climate](https://codeclimate.com/github/omidbachari/launchvotes.png)](https://codeclimate.com/github/omidbachari/launchvotes) [![Coverage Status](https://coveralls.io/repos/omidbachari/launchvotes/badge.svg)](https://coveralls.io/r/omidbachari/launchvotes)
 
 A Sinatra/ActiveRecord based app that allows users to nominate each other for awards and vote on them.
 
