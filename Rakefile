@@ -1,7 +1,7 @@
 require './server'
 require 'sinatra/activerecord/rake'
+require 'rspec/core/rake_task'
 
-if Sinatra::Base.development? || Sinatra::Base.test?
-  require 'rspec/core/rake_task'
-  RSpec::Core::RakeTask.new(:spec)
-end
+RSpec::Core::RakeTask.new(:spec)
+
+task default: :spec

@@ -2,4 +2,6 @@ language: ruby
 rvm:
   - 2.0.0
 before_script:
+  - cp .env.example .env
   - psql -c 'create database launchvotes_test;' -U postgres
+  - bundle exec rake db:migrate
