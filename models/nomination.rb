@@ -20,8 +20,8 @@ class Nomination < ActiveRecord::Base
   end
 
   def votable?
-    week_start = Date.today.beginning_of_week
-    week_end = Date.today.end_of_week
+    week_start = DateTime.now.beginning_of_week
+    week_end = DateTime.now.end_of_week
     week_start < created_at && created_at < week_end
   end
 
