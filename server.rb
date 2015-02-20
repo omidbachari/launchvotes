@@ -14,7 +14,7 @@ end
 
 set :host, ENV["HOSTNAME"]
 
-configure :development do
+configure :development, :test do
   require 'pry'
   set :force_ssl, false
 end
@@ -37,14 +37,14 @@ end
 def authorize!
   unless signed_in?
     flash[:notice] = "You need to sign in first."
-    redirect '/'
+    redirect to('/')
   end
 end
 
 def authorize_admin!
   if !signed_in? || !current_user.admin?
     flash[:notice] = "You are not authorized to view this resource!"
-    redirect '/'
+    redirect to('/')
   end
 end
 
@@ -65,21 +65,21 @@ get '/auth/:provider/callback' do
   if user.save
     session['user_id'] = user.id
     flash[:notice] = "You have signed in as #{user.display_name}"
-    redirect '/nominations'
+    redirect to('/nominations')
   else
     flash[:error] = "There was a problem signing in."
-    redirect '/'
+    redirect to('/')
   end
 end
 
 get '/sign_out' do
   session['user_id'] = nil
   flash[:notice] = "You have signed out"
-  redirect '/'
+  redirect to('/')
 end
 
 get '/' do
-  redirect '/nominations' if current_user
+  redirect to('/nominations') if current_user
   erb :index
 end
 
@@ -135,7 +135,7 @@ post '/nominations' do
   else
     flash[:error] = nomination.errors.full_messages.join
   end
-  redirect '/nominations'
+  redirect to('/nominations')
 end
 
 post '/nominations/:id/vote' do
@@ -147,5 +147,5 @@ post '/nominations/:id/vote' do
   else
     flash[:error] = vote.errors.full_messages.join
   end
-  redirect "/nominations"
+  redirect to('/nominations')
 end
