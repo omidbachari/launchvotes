@@ -16,11 +16,13 @@ set :host, ENV["HOSTNAME"]
 
 configure :development, :test do
   require 'pry'
-  set :force_ssl, false
+  # set :force_ssl, false
 end
 
 configure :production do
-  set :force_ssl, true
+  require 'rack/ssl'
+  use Rack::SSL
+  # set :force_ssl, true
 end
 
 configure do
