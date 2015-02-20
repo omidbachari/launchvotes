@@ -8,63 +8,53 @@ feature 'user creates a nomination', %q{
 
 } do
 
-  let(:user) { FactoryGirl.create(:user) }
+  let!(:team) { FactoryGirl.create(:team) }
+  let!(:teammate_1) { FactoryGirl.create(:team_membership, team: team).user }
+  let!(:teammate_2) { FactoryGirl.create(:team_membership, team: team).user }
+  let!(:other_guy) { FactoryGirl.create(:team_membership).user }
+
+  scenario 'users can only nominate people on the same team' do
+    login_as teammate_1
+
+    within("#nomination_nominee_id") do
+      expect(page).to have_content(teammate_2.name)
+    end
+  end
+
+  scenario 'users can only nominate people on the same team' do
+    login_as teammate_1
+
+    within("#nomination_nominee_id") do
+      expect(page).to_not have_content(other_guy.name)
+    end
+  end
 
   scenario 'authenticated user nominates another user' do
-    nomination = FactoryGirl.build(:nomination)
-    login_as user
+    login_as teammate_1
 
-    select nomination.nominee.name, from: 'Nominee'
-    fill_in 'Content', with: nomination.content
+    select teammate_2.name, from: 'Nominee'
+    fill_in 'Content', with: "Most Glorious Beard"
     click_on 'Submit'
 
     expect(page).to have_content('Your nomination has been made!')
   end
 
   scenario 'user cannot nominate self' do
-    login_as user
+    login_as other_guy
 
-    select user.name, from: 'Nominee'
+    select other_guy.name, from: 'Nominee'
     fill_in 'Content', with: 'Best Hairdo'
     click_on 'Submit'
 
     expect(page).to have_content('Egotistical nomination detected! Submission rejected.')
   end
 
-  xscenario 'duplicate nominations for the same nominee are rejected' do
-    pending 'nondeterministic, model test exists'
-    nomination = FactoryGirl.create(:nomination)
-
-    login_as user
-
-    select nomination.nominee.name, from: 'Nominee'
-    fill_in 'Content', with: nomination.content
-    click_on 'Submit'
-
-    expect(page).to have_content('Duplicate nomination detected! Submission rejected.')
-  end
-
-  xscenario 'duplicate nominations by the same user are rejected' do
-    pending 'nondeterministic, model test exists'
-    nomination_one = FactoryGirl.create(:nomination, nominator: user)
-    nomination_two = FactoryGirl.build(:nomination)
-
-    login_as user
-
-    select nomination_two.nominee.name, from: 'Nominee'
-    fill_in 'Content', with: nomination_one.content
-    click_on 'Submit'
-
-    expect(page).to have_content('You have already nominated someone for this award!')
-  end
-
   scenario 'injecting tags into the page is not allowed' do
-    nomination = FactoryGirl.build(:nomination)
-    login_as user
+    login_as teammate_1
 
     malicious_code = "<script>window.open('http://heyyeyaaeyaaaeyaeyaa.com/')</script>"
 
-    select nomination.nominee.name, from: 'Nominee'
+    select teammate_2.name, from: 'Nominee'
     fill_in 'Content', with: malicious_code
     click_on 'Submit'
 

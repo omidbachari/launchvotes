@@ -1,7 +1,6 @@
 require 'dotenv'
 Dotenv.load
 
-require 'octokit'
 require 'omniauth-github'
 require 'sinatra'
 require 'sinatra/activerecord'
@@ -24,7 +23,6 @@ configure :production do
   set :force_ssl, true
 end
 
-
 configure do
   enable :sessions
   set :session_secret, ENV['SESSION_SECRET']
@@ -44,7 +42,7 @@ def authorize!
 end
 
 def authorize_admin!
-  if !signed_in? || !current_user.is_admin?
+  if !signed_in? || !current_user.admin?
     flash[:notice] = "You are not authorized to view this resource!"
     redirect '/'
   end
@@ -98,7 +96,11 @@ end
 get '/nominations' do
   authorize!
 
-  @users = User.order(:name)
+  team_ids = current_user.teams.pluck(:team_id)
+  @users = User.joins(:team_memberships)
+    .where(team_memberships: { team_id: team_ids })
+    .order(:name)
+
   @nominations = Nomination.this_week
     .includes(:nominee)
     .where.not(nominee: current_user)
@@ -145,20 +147,4 @@ post '/nominations/:id/vote' do
     flash[:error] = vote.errors.full_messages.join
   end
   redirect "/nominations"
-end
-
-get '/teams' do
-  authorize_admin!
-  GithubTeam.fetch_teams(current_user.github_token)
-  @github_teams = GithubTeam.all
-  erb :teams
-end
-
-post '/teams' do
-  authorize_admin!
-  github_team = GithubTeam.find(params[:github_team][:id])
-  github_team.fetch_members(current_user.github_token)
-
-  flash[:notice] = "Members of '#{github_team.name}' added successfully!"
-  redirect '/nominations'
 end
