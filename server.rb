@@ -97,7 +97,8 @@ get '/nominations' do
   authorize!
 
   team_ids = current_user.teams.pluck(:team_id)
-  @users = User.joins(:team_memberships)
+  @users = User.uniq
+    .joins(:team_memberships)
     .where(team_memberships: { team_id: team_ids })
     .order(:name)
 
