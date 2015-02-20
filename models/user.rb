@@ -30,4 +30,8 @@ class User < ActiveRecord::Base
   def display_name
     name || username
   end
+
+  def display_image
+    pic_url || "http://placegoat.com/300/300"
+  end
 end
