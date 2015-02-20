@@ -62,7 +62,7 @@ end
 
 get '/auth/:provider/callback' do
   user = User.from_omniauth(env['omniauth.auth'])
-  if user.save
+  if user && user.save
     session['user_id'] = user.id
     flash[:notice] = "You have signed in as #{user.display_name}"
     redirect to('/nominations')
