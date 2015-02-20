@@ -1,7 +1,9 @@
 require './server'
 require 'sinatra/activerecord/rake'
-require 'rspec/core/rake_task'
 
-RSpec::Core::RakeTask.new(:spec)
+unless Sinatra::Base.production?
+  require 'rspec/core/rake_task'
 
-task default: :spec
+  RSpec::Core::RakeTask.new(:spec)
+  task default: :spec
+end

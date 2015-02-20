@@ -1,7 +1,6 @@
 require 'dotenv'
 Dotenv.load
 
-require 'octokit'
 require 'omniauth-github'
 require 'sinatra'
 require 'sinatra/activerecord'
@@ -15,15 +14,14 @@ end
 
 set :host, ENV["HOSTNAME"]
 
-configure :development do
+configure :development, :test do
   require 'pry'
-  set :force_ssl, false
 end
 
 configure :production do
-  set :force_ssl, true
+  require 'rack/ssl'
+  use Rack::SSL
 end
-
 
 configure do
   enable :sessions
@@ -39,14 +37,14 @@ end
 def authorize!
   unless signed_in?
     flash[:notice] = "You need to sign in first."
-    redirect '/'
+    redirect to('/')
   end
 end
 
 def authorize_admin!
-  if !signed_in? || !current_user.is_admin?
+  if !signed_in? || !current_user.admin?
     flash[:notice] = "You are not authorized to view this resource!"
-    redirect '/'
+    redirect to('/')
   end
 end
 
@@ -64,24 +62,24 @@ end
 
 get '/auth/:provider/callback' do
   user = User.from_omniauth(env['omniauth.auth'])
-  if user.save
+  if user && user.save
     session['user_id'] = user.id
     flash[:notice] = "You have signed in as #{user.display_name}"
-    redirect '/nominations'
+    redirect to('/nominations')
   else
     flash[:error] = "There was a problem signing in."
-    redirect '/'
+    redirect to('/')
   end
 end
 
 get '/sign_out' do
   session['user_id'] = nil
   flash[:notice] = "You have signed out"
-  redirect '/'
+  redirect to('/')
 end
 
 get '/' do
-  redirect '/nominations' if current_user
+  redirect to('/nominations') if current_user
   erb :index
 end
 
@@ -98,7 +96,12 @@ end
 get '/nominations' do
   authorize!
 
-  @users = User.order(:name)
+  team_ids = current_user.teams.pluck(:team_id)
+  @users = User.uniq
+    .joins(:team_memberships)
+    .where(team_memberships: { team_id: team_ids })
+    .order(:name)
+
   @nominations = Nomination.this_week
     .includes(:nominee)
     .where.not(nominee: current_user)
@@ -132,7 +135,7 @@ post '/nominations' do
   else
     flash[:error] = nomination.errors.full_messages.join
   end
-  redirect '/nominations'
+  redirect to('/nominations')
 end
 
 post '/nominations/:id/vote' do
@@ -144,21 +147,5 @@ post '/nominations/:id/vote' do
   else
     flash[:error] = vote.errors.full_messages.join
   end
-  redirect "/nominations"
-end
-
-get '/teams' do
-  authorize_admin!
-  GithubTeam.fetch_teams(current_user.github_token)
-  @github_teams = GithubTeam.all
-  erb :teams
-end
-
-post '/teams' do
-  authorize_admin!
-  github_team = GithubTeam.find(params[:github_team][:id])
-  github_team.fetch_members(current_user.github_token)
-
-  flash[:notice] = "Members of '#{github_team.name}' added successfully!"
-  redirect '/nominations'
+  redirect to('/nominations')
 end

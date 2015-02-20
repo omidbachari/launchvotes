@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-RSpec.describe GithubTeam, model: true do
+RSpec.describe Team, model: true do
+  it { should have_many(:team_memberships) }
   it { should have_many(:users) }
   it { should validate_presence_of(:name) }
-  it { should validate_presence_of(:tid) }
 end
