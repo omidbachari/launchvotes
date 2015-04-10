@@ -10,6 +10,7 @@ files.each do |file|
     user = User.find_or_initialize_by(username: row[:username])
     user.name = row[:name]
     user.provider = "github"
+    puts "Saving #{user.name}"
     user.save!
     team.users << user
   end
