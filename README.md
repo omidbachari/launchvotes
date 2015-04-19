@@ -4,6 +4,11 @@
 
 A Sinatra/ActiveRecord based app that allows users to nominate each other for awards and vote on them.
 
+## Links
+
+[Production](https://launchvotes.herokuapp.com)
+[Staging](https://launchvotes-staging.herokuapp.com)
+
 ## Setup git Remotes
 ```
 git remote add fork git@github.com:<your_username>/launchvotes.git
@@ -17,4 +22,10 @@ git remote add production git@heroku.com:launchvotes.git
 heroku pgbackups:capture --remote production
 curl -o db/dumps/latest.dump `heroku pgbackups:url --remote production`
 pg_restore --verbose --clean --no-acl --no-owner -h localhost -d launchvotes_development db/dumps/latest.dump
+```
+
+## Copy LaunchVotes-Production Database to Staging
+```
+heroku pgbackups:capture --remote production
+heroku pgbackups:restore DATABASE `heroku pgbackups:url --remote production` --remote staging
 ```
