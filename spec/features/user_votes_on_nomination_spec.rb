@@ -34,8 +34,16 @@ feature 'user votes on a nomination', %q{
     login_as user
 
     visit '/nominations/1/weeks_ago'
-    #expect(page).to_not have_button(nomination.votes_count)
     expect(page).to_not have_css('input.votes')
+  end
+
+  scenario 'nominator cannot vote on a nomination they have made' do
+    nomination = FactoryGirl.create(:nomination, nominator: user)
+    login_as user
+
+    visit '/nominations'
+    find('input.votes').click
+    expect(page).to have_content('You made this nomination. Your vote does not count!')
   end
 
 end
