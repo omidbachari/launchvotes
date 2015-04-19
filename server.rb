@@ -88,6 +88,7 @@ get '/awards' do
 
   @nominations = Nomination.this_week
     .includes(:nominee)
+    .where('votes_count > 0')
     .order(votes_count: :asc)
 
   erb :awards
@@ -113,6 +114,7 @@ end
 get '/nominations/:weeks/weeks_ago' do |weeks|
   @nominations = Nomination.weeks_ago(weeks.to_i)
     .includes(:nominee)
+    .where('votes_count > 0')
     .order(votes_count: :desc)
 
   erb :awards

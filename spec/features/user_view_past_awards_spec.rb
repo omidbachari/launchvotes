@@ -11,9 +11,9 @@ feature 'user views past awards', %q{
   # Acceptance Criteria:
   # [x] An unauthenticated user can view past awards
   # [x] A link to past awards should exist on the root page
-  # [ ] A nomination without any votes is not an award
+  # [x] A nomination without any votes is not an award
 
-  let(:nomination) { FactoryGirl.create(:nomination, created_at: 1.week.ago) }
+  let!(:nomination) { FactoryGirl.create(:nomination, created_at: 1.week.ago) }
 
   scenario 'view past awards' do
     award = create_award
@@ -29,5 +29,6 @@ def create_award
   award = FactoryGirl.create(:nomination)
   FactoryGirl.create(:vote, nomination: award)
   award.created_at = 1.week.ago
+  award.save
   award
 end
