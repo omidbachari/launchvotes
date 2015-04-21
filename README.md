@@ -7,6 +7,7 @@ A Sinatra/ActiveRecord based app that allows users to nominate each other for aw
 ## Links
 
 [Production](https://launchvotes.herokuapp.com)
+
 [Staging](https://launchvotes-staging.herokuapp.com)
 
 ## Setup git Remotes
@@ -19,13 +20,16 @@ git remote add production git@heroku.com:launchvotes.git
 
 ## Copy LaunchVotes-Production Database to Development
 ```
-heroku pgbackups:capture --remote production
-curl -o db/dumps/latest.dump `heroku pgbackups:url --remote production`
+heroku pg:backups capture --remote production
+curl -o db/dumps/latest.dump `heroku pg:backups public-url --remote production`
 pg_restore --verbose --clean --no-acl --no-owner -h localhost -d launchvotes_development db/dumps/latest.dump
 ```
 
 ## Copy LaunchVotes-Production Database to Staging
 ```
-heroku pgbackups:capture --remote production
-heroku pgbackups:restore DATABASE `heroku pgbackups:url --remote production` --remote staging
+heroku pg:backups capture --remote production
+heroku pg:backups restore `heroku pg:backups public-url --remote production` DATABASE --remote staging
 ```
+
+## Working with PGBackups
+[Heroku link](https://devcenter.heroku.com/articles/mapping-pgbackups-commands)
