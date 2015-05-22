@@ -62,7 +62,9 @@ end
 
 get '/auth/:provider/callback' do
   user = User.from_omniauth(env['omniauth.auth'])
+
   if user && user.save
+    user.team_memberships.find_or_create_by(team: Team.default_team)
     session['user_id'] = user.id
     flash[:notice] = "You have signed in as #{user.display_name}"
     redirect to('/nominations')
