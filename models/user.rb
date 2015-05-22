@@ -18,7 +18,7 @@ class User < ActiveRecord::Base
       pic_url: auth.info.image,
     }
 
-    user = find_by(username: auth.info.nickname)
+    user = find_or_create_by(username: auth.info.nickname)
     user.assign_attributes(user_attributes) if user
     user
   end
