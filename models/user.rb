@@ -12,14 +12,12 @@ class User < ActiveRecord::Base
 
   def self.from_omniauth(auth)
     user_attributes = {
-      uid: auth.uid,
-      provider: auth.provider,
       email: auth.info.email,
       pic_url: auth.info.image,
       name: auth.info.name
     }
 
-    user = find_or_create_by(username: auth.info.nickname)
+    user = find_or_create_by(uid: auth.uid, provider: auth.provider)
     user.assign_attributes(user_attributes) if user
     user
   end
