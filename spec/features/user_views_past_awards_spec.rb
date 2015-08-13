@@ -16,7 +16,7 @@ feature 'user views past awards', %q{
   let!(:nomination) { FactoryGirl.create(:nomination, created_at: 1.week.ago) }
 
   scenario 'view past awards' do
-    award = create_award
+    award = create_past_award
     visit '/'
     click_on "View Past Awards"
     expect(page).to have_content(award.content)
@@ -25,7 +25,7 @@ feature 'user views past awards', %q{
 
 end
 
-def create_award
+def create_past_award
   award = FactoryGirl.create(:nomination)
   FactoryGirl.create(:vote, nomination: award)
   award.created_at = 1.week.ago
