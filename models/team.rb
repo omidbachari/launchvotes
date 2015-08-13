@@ -7,4 +7,8 @@ class Team < ActiveRecord::Base
   def self.default_team
     find_or_create_by(name: "Launchers")
   end
+
+  def self.current_team
+    find_or_create_by(name: "Fall 2015")
+  end
 end
