@@ -14,7 +14,8 @@ class User < ActiveRecord::Base
     user_attributes = {
       email: auth.info.email,
       pic_url: auth.info.image,
-      name: auth.info.name
+      name: auth.info.name,
+      username: auth.info.nickname
     }
 
     user = find_or_create_by(uid: auth.uid, provider: auth.provider)
