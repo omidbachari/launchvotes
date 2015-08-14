@@ -5,7 +5,9 @@ class User < ActiveRecord::Base
     "http://www.fillmurray.com/300/300",
     "http://www.nicenicejpg.com/300/300",
     "http://www.placecage.com/300/300",
-    "http://www.placebear.com/200/300"
+    "http://www.placebear.com/300/300",
+    "http://www.stevensegallery.com/300/300",
+    "http://placekitten.com/g/250/250"
   ]
 
   has_many :nominations, foreign_key: :nominator_id
