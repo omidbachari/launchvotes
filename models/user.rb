@@ -1,4 +1,13 @@
 class User < ActiveRecord::Base
+  IMAGE_SOURCES = [
+    "http://placegoat.com/300/300",
+    "http://placecreature.com/300/300",
+    "http://www.fillmurray.com/300/300",
+    "http://www.nicenicejpg.com/300/300",
+    "http://www.placecage.com/300/300",
+    "http://www.placebear.com/200/300"
+  ]
+
   has_many :nominations, foreign_key: :nominator_id
   has_many :awards, foreign_key: :nominee_id, class_name: 'Nomination'
   has_many :votes
@@ -33,10 +42,8 @@ class User < ActiveRecord::Base
   end
 
   def display_image
-    if pic_url && default_gravatar?
-      "http://placecreature.com/300/300"
-    elsif pic_url.empty?
-      "http://placegoat.com/300/300"
+    if (pic_url && default_gravatar?) || pic_url.empty?
+      IMAGE_SOURCES.sample
     else
       pic_url
     end
