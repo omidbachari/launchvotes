@@ -1,0 +1,19 @@
+require "spec_helper"
+
+feature "default gravatar" do
+  let(:user) { FactoryGirl.create(:user) }
+
+  let(:lazy_user) do
+    FactoryGirl.create(:user,
+      pic_url: "https://avatars2.githubusercontent.com/u/11095274?v=3&s=400"
+    )
+  end
+
+  let!(:nomination) { FactoryGirl.create(:nomination, nominee: lazy_user) }
+
+  scenario "default gravatars are replaced", focus: true do
+    login_as user
+    visit "/nominations"
+    expect(page).to_not have_css("img[src='#{nomination.nominee.pic_url}']")
+  end
+end
