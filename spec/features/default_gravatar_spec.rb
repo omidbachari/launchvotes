@@ -1,6 +1,6 @@
 require "spec_helper"
 
-feature "default gravatar", focus: true do
+feature "default gravatar" do
   let(:user) { FactoryGirl.create(:user) }
 
   context "nominee has default gravatar" do

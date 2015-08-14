@@ -32,6 +32,16 @@ class User < ActiveRecord::Base
   end
 
   def display_image
-    pic_url || "http://placegoat.com/300/300"
+    if pic_url && default_gravatar?
+      "http://placecreature.com/300/300"
+    elsif pic_url.empty?
+      "http://placegoat.com/300/300"
+    else
+      pic_url
+    end
+  end
+
+  def default_gravatar?
+    default_gravatar
   end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150220000433) do
+ActiveRecord::Schema.define(version: 20150814180450) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,13 +42,14 @@ ActiveRecord::Schema.define(version: 20150220000433) do
     t.string   "provider"
     t.string   "username"
     t.string   "pic_url"
-    t.string   "email",          limit: 255
-    t.string   "name",           limit: 255
-    t.string   "role",           limit: 255, default: "user", null: false
-    t.string   "github_token",   limit: 255
+    t.string   "email",            limit: 255
+    t.string   "name",             limit: 255
+    t.string   "role",             limit: 255, default: "user", null: false
+    t.string   "github_token",     limit: 255
     t.integer  "github_team_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "default_gravatar",             default: true
   end
 
   create_table "votes", force: :cascade do |t|

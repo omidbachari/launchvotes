@@ -12,6 +12,7 @@ gem 'sinatra-activerecord'
 gem 'sinatra-contrib'
 gem 'sinatra-flash'
 gem 'sanitize'
+gem 'rmagick'
 
 group :development, :test do
   gem 'capybara'
