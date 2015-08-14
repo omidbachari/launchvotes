@@ -13,9 +13,10 @@ class User < ActiveRecord::Base
   def self.from_omniauth(auth)
     user_attributes = {
       email: auth.info.email,
-      pic_url: auth.info.image,
       name: auth.info.name,
-      username: auth.info.nickname
+      username: auth.info.nickname,
+      pic_url: auth.info.image,
+      default_gravatar: Image.new(auth.info.image).is_gravatar?
     }
 
     user = find_or_create_by(uid: auth.uid, provider: auth.provider)

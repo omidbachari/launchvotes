@@ -7,6 +7,7 @@ require 'sinatra/activerecord'
 require 'sinatra/reloader'
 require 'sinatra/flash'
 require 'sanitize'
+require './lib/image'
 
 Dir[File.join(File.dirname(__FILE__), 'models', '**', '*.rb')].each do |file|
   require file
