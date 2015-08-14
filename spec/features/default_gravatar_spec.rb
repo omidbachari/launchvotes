@@ -6,7 +6,7 @@ feature "default gravatar" do
   context "nominee has default gravatar" do
     let(:lazy_user) do
       FactoryGirl.create(:user,
-        pic_url: "https://avatars2.githubusercontent.com/u/11095274?v=3&s=400"
+        pic_url: "http://localhost:4567/images/gravatar.png"
       )
     end
 
