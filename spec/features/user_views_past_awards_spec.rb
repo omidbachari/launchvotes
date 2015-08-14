@@ -28,7 +28,7 @@ end
 def create_past_award
   award = FactoryGirl.create(:nomination)
   FactoryGirl.create(:vote, nomination: award)
-  award.created_at = 1.week.ago
+  award.created_at = 1.week.ago - 1.day
   award.save
   award
 end

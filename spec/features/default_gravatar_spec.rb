@@ -16,6 +16,7 @@ feature "default gravatar" do
       login_as user
       visit "/nominations"
       expect(page).to_not have_css("img[src='#{nomination.nominee.pic_url}']")
+      expect(page).to have_css("img[src*='http://placecreature.com']")
     end
   end
 
