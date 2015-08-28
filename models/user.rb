@@ -44,7 +44,7 @@ class User < ActiveRecord::Base
   end
 
   def display_image
-    if (pic_url && default_gravatar?) || pic_url.empty?
+    if (pic_url && default_gravatar?) || (pic_url && pic_url.empty?)
       IMAGE_SOURCES.sample
     else
       pic_url
