@@ -2,7 +2,6 @@ class User < ActiveRecord::Base
   IMAGE_SOURCES = [
     "http://placegoat.com/300/300",
     "http://placecreature.com/300/300",
-    "http://www.fillmurray.com/300/300",
     "http://www.nicenicejpg.com/300/300",
     "http://www.placecage.com/300/300",
     "http://www.placebear.com/300/300",
@@ -26,9 +25,12 @@ class User < ActiveRecord::Base
       email: auth.info.email,
       name: auth.info.name,
       username: auth.info.nickname,
-      pic_url: auth.info.image,
-      default_gravatar: Image.new(auth.info.image).is_gravatar?
+      pic_url: auth.info.image
     }
+
+    if Sinatra::Base.production?
+      user_attributes[:default_gravatar] = Image.new(auth.info.image).is_gravatar?
+    end
 
     user = find_or_create_by(uid: auth.uid, provider: auth.provider)
     user.assign_attributes(user_attributes) if user

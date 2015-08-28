@@ -17,12 +17,12 @@ ActiveRecord::Schema.define(version: 20150814180450) do
   enable_extension "plpgsql"
 
   create_table "nominations", force: :cascade do |t|
-    t.string   "content",      limit: 255,             null: false
-    t.integer  "nominee_id",                           null: false
-    t.integer  "nominator_id",                         null: false
+    t.string   "content",                  null: false
+    t.integer  "nominee_id",               null: false
+    t.integer  "nominator_id",             null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "votes_count",              default: 0, null: false
+    t.integer  "votes_count",  default: 0, null: false
   end
 
   add_index "nominations", ["content", "nominator_id"], name: "index_nominations_on_content_and_nominator_id", unique: true, using: :btree
@@ -42,14 +42,14 @@ ActiveRecord::Schema.define(version: 20150814180450) do
     t.string   "provider"
     t.string   "username"
     t.string   "pic_url"
-    t.string   "email",            limit: 255
-    t.string   "name",             limit: 255
-    t.string   "role",             limit: 255, default: "user", null: false
-    t.string   "github_token",     limit: 255
+    t.string   "email"
+    t.string   "name"
+    t.string   "role",             default: "user", null: false
+    t.string   "github_token"
     t.integer  "github_team_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "default_gravatar",             default: true
+    t.boolean  "default_gravatar", default: true
   end
 
   create_table "votes", force: :cascade do |t|
