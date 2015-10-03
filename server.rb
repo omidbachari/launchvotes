@@ -1,6 +1,7 @@
 require 'dotenv'
 Dotenv.load
 
+require 'json'
 require 'omniauth-github'
 require 'sinatra'
 require 'sinatra/activerecord'
@@ -46,6 +47,12 @@ def authorize_admin!
   if !signed_in? || !current_user.admin?
     flash[:notice] = "You are not authorized to view this resource!"
     redirect to('/')
+  end
+end
+
+def authorize_api!
+  unless params[:token] && params[:token] == ENV['API_KEY']
+    halt 400
   end
 end
 
@@ -153,4 +160,25 @@ post '/nominations/:id/vote' do
     flash[:error] = vote.errors.full_messages.join
   end
   redirect to('/nominations')
+end
+
+get '/api/v1/users' do
+  authorize_api!
+  { users: User.all.as_json }.to_json
+end
+
+get '/api/v1/nominations' do
+  authorize_api!
+
+  nominations = Nomination.all
+  json = nominations.as_json
+
+  json.map.with_index do |nomination, i|
+    nomination["nominee"] = User.find(nomination["nominee_id"]).username
+    nomination["nominator"] = User.find(nomination["nominator_id"]).username
+    voters = nominations[i].votes.map { |vote| vote.user.username }
+    nomination["voters"] = voters.as_json
+  end
+
+  { nominations: json }.to_json
 end
